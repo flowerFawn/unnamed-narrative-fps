@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://ch20kwtwafgae"]
+
+[ext_resource type="PackedScene" uid="uid://byque4w54oowj" path="res://player/player.tscn" id="1_28p7h"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_vmthy"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_vmthy"]
+
+[node name="World" type="Node3D" unique_id=332592426]
+
+[node name="CharacterBody3D" parent="." unique_id=202432036 instance=ExtResource("1_28p7h")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=558906712]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=593852699]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6785134, 0)
+shape = SubResource("WorldBoundaryShape3D_vmthy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=949283375]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.7951908)
+mesh = SubResource("PrismMesh_vmthy")
