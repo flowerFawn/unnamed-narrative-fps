@@ -4,8 +4,9 @@ class_name Player
 const BASE_SPEED:int = 1
 const SPRINT_MULTIPLIER:float = 2
 const TERMINAL_VELOCITY:int = 3
-const GRAVITY:float = 9.8
-const JUMP_FORCE:float = 5
+const GRAVITY:float = 9.8 / 2
+const JUMP_VERTICAL_FORCE:float = 2
+const JUMP_HORIZONTAL_MULTIPLIER:float = 2
 
 enum PlayerState{
 	WALKING,
@@ -46,7 +47,8 @@ func walking_physics_process(delta:float, multiplier:float = 1) -> void:
 	velocity.x = movement_vector.y
 	velocity.z = movement_vector.x
 	
-
+##If the player is falling at a slower speed than terminal velocity, adds gravity
+##Will never cause the player to fall faster than terminal velocity
 func airtime_physics_process(delta:float) -> void:
 	if velocity.y > -TERMINAL_VELOCITY:
 		velocity.y = max(-TERMINAL_VELOCITY, velocity.y - (GRAVITY * delta))
@@ -59,10 +61,12 @@ func check_for_state_change() -> void:
 	if state == PlayerState.AIRTIME:
 		if is_on_floor():
 			set_state(PlayerState.WALKING)
+	else:
+		if not is_on_floor():
+			set_state(PlayerState.AIRTIME)
 	if state == PlayerState.WALKING or state == PlayerState.SPRINTING:
 		if Input.is_action_just_pressed("Jump"):
-			set_state(PlayerState.AIRTIME)
-			velocity.y = JUMP_FORCE
+			start_jump()
 	if state == PlayerState.WALKING:
 		if Input.is_action_pressed("Sprint"):
 			set_state(PlayerState.SPRINTING)
@@ -70,7 +74,12 @@ func check_for_state_change() -> void:
 		if not Input.is_action_pressed("Sprint"):
 			set_state(PlayerState.WALKING)
 		
-
+##Sets the player's state to airtime 
+func start_jump() -> void:
+	set_state(PlayerState.AIRTIME)
+	velocity.y = JUMP_VERTICAL_FORCE
+	velocity.x *= JUMP_HORIZONTAL_MULTIPLIER
+	velocity.z *= JUMP_HORIZONTAL_MULTIPLIER
 				
 				
 func set_state(new_state:PlayerState) -> void:
