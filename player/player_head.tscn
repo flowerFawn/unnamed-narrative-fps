@@ -1,8 +1,14 @@
 [gd_scene format=3 uid="uid://0hpsvqsuisno"]
 
 [ext_resource type="Script" uid="uid://d3m54dkfp81lh" path="res://player/head.gd" id="1_quj11"]
+[ext_resource type="PackedScene" uid="uid://b7qauu8gsgoss" path="res://player/weapon_handler.tscn" id="2_l8da5"]
+[ext_resource type="PackedScene" uid="uid://clkbpt84ux8nt" path="res://weapons/weapon.tscn" id="2_v7rxg"]
 
 [node name="PlayerHead" type="Node3D" unique_id=943587034]
 script = ExtResource("1_quj11")
+
+[node name="WeaponHandler" parent="." unique_id=371473595 instance=ExtResource("2_l8da5")]
+
+[node name="WeaponNode" parent="WeaponHandler" unique_id=1235624941 instance=ExtResource("2_v7rxg")]
 
 [node name="PlayerHeadCamera" type="Camera3D" parent="." unique_id=563557059]

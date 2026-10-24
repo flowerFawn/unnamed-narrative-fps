@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="WeaponInfo" format=3 uid="uid://4jr44hepu3pe"]
+
+[ext_resource type="Script" uid="uid://spf2elj4s0kt" path="res://weapons/weapon_info.gd" id="1_i2rap"]
+
+[resource]
+script = ExtResource("1_i2rap")
+name = "Pistol"
+damage = 10
+cooldown = 0.3
+auto_mode = 1
+metadata/_custom_type_script = "uid://spf2elj4s0kt"
