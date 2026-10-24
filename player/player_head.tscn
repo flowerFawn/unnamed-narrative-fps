@@ -2,13 +2,24 @@
 
 [ext_resource type="Script" uid="uid://d3m54dkfp81lh" path="res://player/head.gd" id="1_quj11"]
 [ext_resource type="PackedScene" uid="uid://b7qauu8gsgoss" path="res://player/weapon_handler.tscn" id="2_l8da5"]
-[ext_resource type="PackedScene" uid="uid://clkbpt84ux8nt" path="res://weapons/weapon.tscn" id="2_v7rxg"]
+[ext_resource type="Script" uid="uid://c52dnyvcyv6bk" path="res://weapons/scripts/gun.gd" id="3_5yk4i"]
+[ext_resource type="Script" uid="uid://bs40pe42iot7c" path="res://weapons/scripts/melee.gd" id="3_l8da5"]
+[ext_resource type="Resource" uid="uid://hivwbexs808b" path="res://weapons/resources/Wrench.tres" id="4_5yk4i"]
+[ext_resource type="Resource" uid="uid://4jr44hepu3pe" path="res://weapons/resources/Pistol.tres" id="4_q6ykt"]
 
 [node name="PlayerHead" type="Node3D" unique_id=943587034]
 script = ExtResource("1_quj11")
 
 [node name="WeaponHandler" parent="." unique_id=371473595 instance=ExtResource("2_l8da5")]
 
-[node name="WeaponNode" parent="WeaponHandler" unique_id=1235624941 instance=ExtResource("2_v7rxg")]
+[node name="WeaponGun" type="Node3D" parent="WeaponHandler" unique_id=1336929326]
+script = ExtResource("3_5yk4i")
+weapon_info = ExtResource("4_q6ykt")
+metadata/_custom_type_script = "uid://c52dnyvcyv6bk"
+
+[node name="WeaponMelee" type="Node3D" parent="WeaponHandler" unique_id=1207868233]
+script = ExtResource("3_l8da5")
+weapon_info = ExtResource("4_5yk4i")
+metadata/_custom_type_script = "uid://bs40pe42iot7c"
 
 [node name="PlayerHeadCamera" type="Camera3D" parent="." unique_id=563557059]

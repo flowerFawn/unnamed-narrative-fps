@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Urban Unplanning"
+run/main_scene="uid://ch20kwtwafgae"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -22,6 +23,10 @@ window/stretch/aspect="expand"
 [dotnet]
 
 project/assembly_name="New Game Project"
+
+[global_group]
+
+hitable="Node that can be hit by bullets or melee weapons. Should typically have a hit() method"
 
 [input]
 

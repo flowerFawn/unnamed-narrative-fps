@@ -7,5 +7,6 @@ script = ExtResource("1_i2rap")
 name = "Pistol"
 damage = 10
 cooldown = 0.3
+range = 6.0
 auto_mode = 1
 metadata/_custom_type_script = "uid://spf2elj4s0kt"

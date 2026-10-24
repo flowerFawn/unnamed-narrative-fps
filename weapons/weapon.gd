@@ -43,10 +43,7 @@ func attempt_shoot() -> void:
 ##Subroutine that actually shoots. Can be overwritten in some weapon subclasses.
 ##Should not ever be called from outside of attempt_shoot()
 func _shoot() -> void:
-	var ray:RayCast3D = RayCast3D.new()
-	get_tree().root.add_child(ray)
-	ray.global_position = global_position
-	ray.target_position = -global_basis.z.normalized()
+	pass
 
 ##Marks the cooldown flag as true to prevent more shooting, and starts the timer
 ##to undo this.
@@ -58,6 +55,11 @@ func _shot_end() -> void:
 ##timer when it finishes.
 func end_cooldown() -> void:
 	on_cooldown = false
+	
+func attempt_hit(target:PhysicsBody3D) -> void:
+	if target.is_in_group(&"hitable"):
+		if target.has_method(&"hit"):
+			target.hit(weapon_info.damage)
 
 ##Creates and returns a cooldown timer with required values, and connects
 func create_cooldown_timer() -> Timer:
