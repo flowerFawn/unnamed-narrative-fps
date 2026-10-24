@@ -1,5 +1,9 @@
 extends CharacterBody3D
 class_name Player
+##Root of the player scene. Handles primarily movement and collision.
+##Has states for walking/sprinting, and airtime.
+##Depending on the state runs a different process, and then calls move_and_slide().
+##Contains a PlayerHead that controls the camera and shooting.
 
 const BASE_SPEED:int = 1
 const SPRINT_MULTIPLIER:float = 2
@@ -81,6 +85,6 @@ func start_jump() -> void:
 	velocity.x *= JUMP_HORIZONTAL_MULTIPLIER
 	velocity.z *= JUMP_HORIZONTAL_MULTIPLIER
 				
-				
+##Sets the player's state to a new state
 func set_state(new_state:PlayerState) -> void:
 	state = new_state
