@@ -1,11 +1,8 @@
 [gd_scene format=3 uid="uid://ch20kwtwafgae"]
 
 [ext_resource type="PackedScene" uid="uid://byque4w54oowj" path="res://player/player.tscn" id="1_28p7h"]
+[ext_resource type="PackedScene" uid="uid://fhy2dppwmifl" path="res://prototyping/placeholder arena.glb" id="1_ab1pn"]
 [ext_resource type="PackedScene" uid="uid://diprkmfyksj10" path="res://prototyping/target.tscn" id="2_3avtf"]
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_vmthy"]
-
-[sub_resource type="PrismMesh" id="PrismMesh_vmthy"]
 
 [sub_resource type="Animation" id="Animation_3avtf"]
 length = 0.001
@@ -105,18 +102,10 @@ func _ready() -> void:
 
 [node name="World" type="Node3D" unique_id=332592426]
 
+[node name="placeholder arena" parent="." unique_id=1167615103 instance=ExtResource("1_ab1pn")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, -2.4450321, 0)
+
 [node name="CharacterBody3D" parent="." unique_id=202432036 instance=ExtResource("1_28p7h")]
-
-[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=558906712]
-collision_mask = 0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=593852699]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6785134, 0)
-shape = SubResource("WorldBoundaryShape3D_vmthy")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=949283375]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.694478)
-mesh = SubResource("PrismMesh_vmthy")
 
 [node name="Targets" type="Node3D" parent="." unique_id=549373909]
 
@@ -144,3 +133,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3544347, 1.5750749, -3.245
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Targets" unique_id=1586362922]
 libraries/ = SubResource("AnimationLibrary_8e06d")
 script = SubResource("GDScript_vmthy")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1288795861]
+transform = Transform3D(0.7352669, 0.14354831, -0.66240203, 0.05744751, 0.96059877, 0.27193695, 0.6753388, -0.23799963, 0.6980501, 1.1462402, 1.8086548, 0)

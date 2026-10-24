@@ -24,6 +24,10 @@ window/stretch/aspect="expand"
 
 project/assembly_name="New Game Project"
 
+[filesystem]
+
+import/blender/enabled=false
+
 [global_group]
 
 hitable="Node that can be hit by bullets or melee weapons. Should typically have a hit() method"

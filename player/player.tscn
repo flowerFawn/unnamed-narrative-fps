@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://0hpsvqsuisno" path="res://player/player_head.tscn" id="2_rkbax"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y8mhm"]
+height = 1.8
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_vmthy"]
 

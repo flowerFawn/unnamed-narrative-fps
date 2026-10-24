@@ -9,7 +9,7 @@ const BASE_SPEED:int = 1
 const SPRINT_MULTIPLIER:float = 2
 const TERMINAL_VELOCITY:int = 3
 const GRAVITY:float = 9.8 / 2
-const JUMP_VERTICAL_FORCE:float = 2
+const JUMP_VERTICAL_FORCE:float = 2.5
 const JUMP_HORIZONTAL_MULTIPLIER:float = 2
 
 enum PlayerState{
