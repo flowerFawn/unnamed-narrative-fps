@@ -117,7 +117,8 @@ player = NodePath("CharacterBody3D")
 [node name="placeholder arena 2" parent="." unique_id=136679919 instance=ExtResource("2_8y3gp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.7228627, -4.0929365, 0)
 
-[node name="CharacterBody3D" parent="." unique_id=202432036 instance=ExtResource("1_28p7h")]
+[node name="CharacterBody3D" parent="." unique_id=202432036 node_paths=PackedStringArray("level") instance=ExtResource("1_28p7h")]
+level = NodePath("..")
 
 [node name="Targets" type="Node3D" parent="." unique_id=549373909]
 

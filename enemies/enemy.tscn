@@ -12,9 +12,10 @@ albedo_color = Color(1, 0, 0, 1)
 material = SubResource("StandardMaterial3D_y8mhm")
 height = 1.8
 
-[node name="Enemy" type="CharacterBody3D" unique_id=680560556 node_paths=PackedStringArray("pathfinding_agent")]
+[node name="Enemy" type="CharacterBody3D" unique_id=680560556 node_paths=PackedStringArray("pathfinding_agent", "airtime_raycast")]
 script = ExtResource("1_fw1ev")
 pathfinding_agent = NodePath("NavigationAgent3D")
+airtime_raycast = NodePath("AirtimeRaycast")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=60541016]
 shape = SubResource("CapsuleShape3D_vmthy")
@@ -24,3 +25,6 @@ mesh = SubResource("CapsuleMesh_vmthy")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=887415089]
 path_height_offset = -0.9
+
+[node name="AirtimeRaycast" type="RayCast3D" parent="." unique_id=429091408]
+target_position = Vector3(0, -2, 0)

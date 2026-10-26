@@ -1,4 +1,4 @@
-extends CharacterBody3D
+extends Actor
 class_name Player
 ##Root of the player scene. Handles primarily movement and collision.
 ##Has states for walking/sprinting, and airtime.
@@ -7,7 +7,6 @@ class_name Player
 
 const BASE_SPEED:int = 1
 const SPRINT_MULTIPLIER:float = 2
-const TERMINAL_VELOCITY:int = 3
 const JUMP_VERTICAL_FORCE:float = 2.5
 const JUMP_HORIZONTAL_MULTIPLIER:float = 2
 
@@ -18,8 +17,7 @@ enum PlayerState{
 	DISABLED,
 }
 
-##The level the player is currently in. Stores information such as gravity
-@export var level:Level
+
 ##Head node of the player. Controls the camera and the players pitch/yaw.
 @export var head:PlayerHead
 ##State of the player
@@ -30,7 +28,6 @@ func _physics_process(delta: float) -> void:
 	#checks if state needs to change at the start of this frame
 	check_for_state_change()
 	#runs the process for the current state
-	print(state)
 	match state:
 		PlayerState.WALKING:
 			walking_physics_process(delta)
@@ -52,11 +49,6 @@ func walking_physics_process(delta:float, multiplier:float = 1) -> void:
 	velocity.x = movement_vector.y
 	velocity.z = movement_vector.x
 	
-##If the player is falling at a slower speed than terminal velocity, adds gravity
-##Will never cause the player to fall faster than terminal velocity
-func airtime_physics_process(delta:float) -> void:
-	if velocity.y > -TERMINAL_VELOCITY:
-		velocity.y = max(-TERMINAL_VELOCITY, velocity.y - (level.GRAVITY * delta))
 	
 ##Based on the current state, checks for factors that would cause state to change
 ##If walking or sprinting, checks for the player triggering a jump
