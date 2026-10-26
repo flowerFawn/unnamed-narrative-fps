@@ -1,0 +1,172 @@
+[gd_scene format=3 uid="uid://ch20kwtwafgae"]
+
+[ext_resource type="PackedScene" uid="uid://byque4w54oowj" path="res://player/player.tscn" id="1_28p7h"]
+[ext_resource type="Script" uid="uid://d1nxfhsy68l3r" path="res://world/level.gd" id="1_fo570"]
+[ext_resource type="PackedScene" uid="uid://diprkmfyksj10" path="res://prototyping/target.tscn" id="2_3avtf"]
+[ext_resource type="PackedScene" uid="uid://cxkbqcnn3cje0" path="res://enemies/enemy.tscn" id="4_8e06d"]
+[ext_resource type="MeshLibrary" uid="uid://dx563rejd547l" path="res://prototyping/mesh_library.tres" id="6_8y3gp"]
+[ext_resource type="Script" uid="uid://cfbv5j06c4l4j" path="res://world/strategy_point_group.gd" id="6_vpdsa"]
+[ext_resource type="Script" uid="uid://cybksx0q1t5jg" path="res://prototyping/strategy_point.gd" id="7_8y3gp"]
+
+[sub_resource type="Animation" id="Animation_3avtf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StaticBody3D3:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.574158, 2.2619066, -3.8356063)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StaticBody3D7:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.359072, 0.076025724, -3.8356063)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("StaticBody3D5:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(2.5780804, 1.1174116, -3.8356063)]
+}
+
+[sub_resource type="Animation" id="Animation_ab1pn"]
+resource_name = "new_animation"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StaticBody3D3:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.574158, 2.2619066, -3.8356063), Vector3(-0.967283, 2.2619066, -3.8356063)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StaticBody3D7:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-1.359072, 2.1887684, -3.8356063), Vector3(-1.359072, 0.076025724, -3.8356063)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("StaticBody3D5:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.99),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(2.5780804, 1.1174116, -3.8356063), Vector3(0.06774044, 1.1174116, -3.8356063)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8e06d"]
+_data = {
+&"RESET": SubResource("Animation_3avtf"),
+&"targets": SubResource("Animation_ab1pn")
+}
+
+[sub_resource type="GDScript" id="GDScript_vmthy"]
+resource_name = "move_targets"
+script/source = "extends AnimationPlayer
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	play(\"targets\")
+"
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_vmthy"]
+geometry_collision_mask = 4294967041
+geometry_source_geometry_mode = 2
+geometry_source_group_name = &"navigation"
+border_size = 0.25
+agent_max_climb = 0.0
+
+[node name="World" type="Node3D" unique_id=332592426 node_paths=PackedStringArray("player")]
+script = ExtResource("1_fo570")
+player = NodePath("CharacterBody3D")
+
+[node name="CharacterBody3D" parent="." unique_id=202432036 instance=ExtResource("1_28p7h")]
+
+[node name="Targets" type="Node3D" parent="." unique_id=549373909]
+
+[node name="StaticBody3D3" parent="Targets" unique_id=75599405 instance=ExtResource("2_3avtf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.574158, 2.2619066, -3.8356063)
+
+[node name="StaticBody3D4" parent="Targets" unique_id=48999351 instance=ExtResource("2_3avtf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0976887, 2.0773554, -3.8356063)
+
+[node name="StaticBody3D5" parent="Targets" unique_id=564068012 instance=ExtResource("2_3avtf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5780804, 1.1174116, -3.8356063)
+
+[node name="StaticBody3D6" parent="Targets" unique_id=1995388294 instance=ExtResource("2_3avtf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5780804, -0.41028476, -3.8356063)
+
+[node name="StaticBody3D7" parent="Targets" unique_id=471780733 instance=ExtResource("2_3avtf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.359072, 0.076025724, -3.8356063)
+
+[node name="StaticBody3D8" parent="Targets" unique_id=863806277 instance=ExtResource("2_3avtf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.70472574, -0.41028476, -3.8356063)
+
+[node name="StaticBody3D2" parent="Targets" unique_id=235856326 instance=ExtResource("2_3avtf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3544347, 1.5750749, -3.2456288)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Targets" unique_id=1586362922]
+libraries/ = SubResource("AnimationLibrary_8e06d")
+script = SubResource("GDScript_vmthy")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1288795861]
+transform = Transform3D(0.7352669, 0.14354837, -0.6624021, 0.05744751, 0.9605988, 0.271937, 0.6753388, -0.2379996, 0.69805, -40.880127, 14.082275, 27.614262)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1095681891]
+navigation_mesh = SubResource("NavigationMesh_vmthy")
+
+[node name="Enemy" parent="." unique_id=680560556 node_paths=PackedStringArray("level", "strategy_points") instance=ExtResource("4_8e06d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.391113, 0.64182127, 2.2926025)
+level = NodePath("..")
+strategy_points = NodePath("../Node3D")
+
+[node name="Node3D" type="Node3D" parent="." unique_id=1383317547]
+script = ExtResource("6_vpdsa")
+
+[node name="StrategyPoint" type="Marker3D" parent="Node3D" unique_id=363880309]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, -1, 0.8872061)
+script = ExtResource("7_8y3gp")
+metadata/_custom_type_script = "uid://cybksx0q1t5jg"
+
+[node name="GridMap" type="GridMap" parent="." unique_id=1966479805]
+mesh_library = ExtResource("6_8y3gp")
+bake_navigation = true
+data = {
+"cells": PackedInt32Array(-65538, 0, 720896, -65537, 0, 720896, -131072, 0, 720896, -131071, 0, 720896, -131071, 65535, 720896, -131071, 65534, 720896, -131071, 65533, 720896, -131072, 65532, 720896, -65537, 65532, 720896, -65537, 65533, 720896, -65537, 65534, 720896, -65537, 65535, 720896, -65538, 65535, 720896, -65539, 65535, 720896, -65539, 65534, 720896, -65539, 65533, 720896, -65539, 65532, 720896, -65539, 65531, 720896, -65539, 65530, 720896, -65538, 65530, 720896, -65538, 65531, 720896, -65538, 65532, 720896, -65538, 65534, 720896, -65538, 65533, 720896, -131072, 65533, 720896, -131072, 65534, 720896, -131072, 65535, 720896, -65537, 65530, 720896, -65537, 65531, 720896, -131072, 65531, 720896, -131072, 65530, 720896, -131071, 65530, 720896, -131071, 65531, 720896, -131071, 65532, 720896, -65539, 0, 720896, -65534, 0, 720897, -65534, 65535, 720897, -65534, 65534, 720897, -65534, 65532, 720897, -65534, 65531, 720897, -65534, 65530, 720897, -65534, 65533, 720896, -65533, 0, 720896, -65533, 65535, 720896, -65533, 65534, 720896, -65533, 65533, 720896, -65533, 65532, 720896, -65533, 65531, 720896, -65533, 65530, 720896, -65532, 0, 720896, -65532, 65535, 720896, -65532, 65531, 720896, -65532, 65530, 720896, 262144, 65526, 720897, 4, 65534, 720897, 4, 65533, 720897, 4, 65532, 720897, 5, 65534, 720896, 5, 65533, 720896, 5, 65532, 720896, 5, 0, 720897, 5, 65535, 720897, 5, 65531, 720897, 5, 65530, 720897, -1, 65531, 720896, -2, 65532, 720896, -131071, 1, 720896, -131071, 2, 720896, -131072, 2, 720896, -65537, 2, 720896, -65537, 1, 720896, -131072, 1, 720896, -65538, 2, 720896, -65538, 1, 720896, -65539, 1, 720896, -65540, 1, 720896, -65540, 2, 720896, -65541, 2, 720896, -65539, 2, 720896, -65541, 1, 720896, -65541, 0, 720896, -65541, 65535, 720896, -65541, 65534, 720896, -65540, 65534, 720896, -65540, 65533, 720896, -65540, 65532, 720896, -65540, 65531, 720896, -65540, 65530, 720896, -65540, 65529, 720896, -65540, 65528, 720896, -65541, 65528, 720896, -65541, 65529, 720896, -65541, 65530, 720896, -65541, 65531, 720896, -65541, 65532, 720896, -65541, 65533, 720896, -65540, 65535, 720896, -65540, 0, 720896, -65539, 65529, 720896, -131071, 65529, 720896, -131072, 65529, 720896, -65537, 65529, 720896, -65538, 65529, 720896, -65539, 65528, 720896, -65538, 65528, 720896, -65537, 65528, 720896, -131072, 65528, 720896, -131071, 65528, 720896, -131070, 65528, 720896, -131069, 65528, 720896, -131069, 65529, 720896, -131068, 65529, 720896, -131070, 65529, 720896, -131067, 65529, 720896, -131067, 65528, 720896, -131068, 65528, 720896, -131070, 2, 720896, -131069, 2, 720896, -131069, 1, 720896, -131068, 1, 720896, -131067, 1, 720896, -131067, 2, 720896, -131068, 2, 720896, -131070, 1, 720896, -65531, 0, 720896, -65531, 65535, 720896, -65531, 65534, 720896, -65531, 65533, 720896, -65531, 65532, 720896, -65531, 65531, 720896, -65531, 65530, 720896, -3, 0, 720896, -2, 2, 720896, -4, 65529, 720896, -4, 65530, 458753, -2, 65531, 720897, -3, 65532, 720897, -3, 1, 720896)
+}
+metadata/_editor_floor_ = Vector3(0, -1, 0)

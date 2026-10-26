@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Urban Unplanning"
-run/main_scene="uid://ch20kwtwafgae"
+run/main_scene="uid://dskooj4qmp27f"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -31,6 +31,7 @@ import/blender/enabled=false
 [global_group]
 
 hitable="Node that can be hit by bullets or melee weapons. Should typically have a hit() method"
+navigation="Meshes that should be considered in the navigation region"
 
 [input]
 
