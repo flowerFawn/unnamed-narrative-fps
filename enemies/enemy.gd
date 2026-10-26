@@ -9,6 +9,7 @@ enum EnemyState {
 	MOVING,
 	SHOOTING,
 	COVERING,
+	AIRTIME,
 }
 
 @export var level:Level

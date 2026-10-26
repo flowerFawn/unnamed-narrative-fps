@@ -8,7 +8,6 @@ class_name Player
 const BASE_SPEED:int = 1
 const SPRINT_MULTIPLIER:float = 2
 const TERMINAL_VELOCITY:int = 3
-const GRAVITY:float = 9.8 / 2
 const JUMP_VERTICAL_FORCE:float = 2.5
 const JUMP_HORIZONTAL_MULTIPLIER:float = 2
 
@@ -19,6 +18,8 @@ enum PlayerState{
 	DISABLED,
 }
 
+##The level the player is currently in. Stores information such as gravity
+@export var level:Level
 ##Head node of the player. Controls the camera and the players pitch/yaw.
 @export var head:PlayerHead
 ##State of the player
@@ -55,7 +56,7 @@ func walking_physics_process(delta:float, multiplier:float = 1) -> void:
 ##Will never cause the player to fall faster than terminal velocity
 func airtime_physics_process(delta:float) -> void:
 	if velocity.y > -TERMINAL_VELOCITY:
-		velocity.y = max(-TERMINAL_VELOCITY, velocity.y - (GRAVITY * delta))
+		velocity.y = max(-TERMINAL_VELOCITY, velocity.y - (level.GRAVITY * delta))
 	
 ##Based on the current state, checks for factors that would cause state to change
 ##If walking or sprinting, checks for the player triggering a jump
