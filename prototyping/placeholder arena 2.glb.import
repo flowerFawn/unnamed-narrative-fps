@@ -45,8 +45,7 @@ _subresources={
 "generate/physics": true
 },
 "PATH:Cube_002": {
-"generate/navmesh": 2,
-"generate/physics": true
+"generate/navmesh": 2
 }
 }
 }
