@@ -2,7 +2,6 @@ extends Actor
 class_name Enemy
 
 const SPEED:float = 1.5
-const COMFORTABLE_SHOOTING_DISTANCE_SQUARED:float = 5 ** 2
 
 
 ##What the enemy has as its current goal
@@ -31,6 +30,8 @@ enum EnemyState {
 ##such as cover or shooting positions. This group can be queried for information
 ##about these strategy points
 @export var strategy_points:StrategyPointGroup
+##The weapon type that this enemy uses
+@export var weapon_type:WeaponInfo
 
 @export_group("base")
 ##Pathfinding agent node used for this enemies pathfinding. Should always
@@ -42,6 +43,10 @@ enum EnemyState {
 @export var airtime_raycast:RayCast3D
 ##Raycast pointed at the player to check for line of sight
 @export var line_of_sight_raycast:RayCast3D
+
+##Reference to the weapon this enemy is using. Generated based on weapon type
+##when the enemy is created
+var weapon:Weapon
 
 
 ##State the enemy is currently in. What the enemy is currently doing
@@ -65,6 +70,19 @@ var distance_squared_to_player:float
 var last_known_player_position:Vector3
 
 
+##Desired shooting distance (from weapon.weapon_info) squared.
+##This means the distance squared function can be used, saving a square root
+##to save cycles. This is stored in a variable so it doesn't have to be recalculated
+##each time. Assigned when the new weapon instance is created
+var desired_shooting_distance_squared:float
+##Maximum comfortable shooting distance (from weapon.weapon_info) squared.
+##This means the distance squared function can be used, saving a square root
+##to save cycles. This is stored in a variable so it doesn't have to be recalculated
+##each time. Assigned when the new weapon instance is created
+var maximum_comfortable_distance_squared:float
+
+
+
 ##If the enemy is currently trying to pathfind to a new position,
 ##or is remaining stationary
 var is_pathfinding:bool
@@ -73,6 +91,12 @@ var is_pathfinding:bool
 var is_shooting:bool
 
 func _ready() -> void:
+	setup()
+	
+func setup() -> void:
+	weapon = weapon_type.create_instance()
+	desired_shooting_distance_squared = weapon.weapon_info.desired_shooting_distance ** 2
+	maximum_comfortable_distance_squared = weapon.weapon_info.maximum_comfortable_shooting_distance ** 2
 	set_state(EnemyState.WALKING)
 	set_mode(EnemyMode.SIMPLE_POSITIONING)
 
@@ -143,7 +167,7 @@ func check_for_state_change() -> void:
 			
 func check_for_mode_change() -> void:
 	if mode == EnemyMode.SIMPLE_POSITIONING:
-		if distance_squared_to_player < COMFORTABLE_SHOOTING_DISTANCE_SQUARED:
+		if distance_squared_to_player < desired_shooting_distance_squared:
 			set_mode(EnemyMode.SIMPLE_SHOOTING)
 		if not has_line_of_sight:
 			set_mode(EnemyMode.SIMPLE_SEARCHING)
@@ -153,7 +177,7 @@ func check_for_mode_change() -> void:
 	if mode == EnemyMode.SIMPLE_SHOOTING:
 		if not has_line_of_sight:
 			set_mode(EnemyMode.SIMPLE_SEARCHING)
-		elif COMFORTABLE_SHOOTING_DISTANCE_SQUARED < distance_squared_to_player:
+		elif maximum_comfortable_distance_squared < distance_squared_to_player:
 			set_mode(EnemyMode.SIMPLE_POSITIONING)
 		
 			

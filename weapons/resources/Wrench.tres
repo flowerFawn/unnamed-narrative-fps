@@ -8,4 +8,5 @@ name = "Wrench"
 damage = 15
 cooldown = 1.0
 range = 0.3
+maximum_comfortable_shooting_distance = 0.2
 metadata/_custom_type_script = "uid://spf2elj4s0kt"
