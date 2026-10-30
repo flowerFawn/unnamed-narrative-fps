@@ -31,6 +31,9 @@ enum WeaponType {
 ##Distance an enemy can be from the player while in simple shooting before
 ##repositioning
 @export var maximum_comfortable_shooting_distance:float
+##Distance an enemy must be from the player while in simple shooting without
+##repositioning (if the player comes this close, they will walk away)
+@export var minimum_comfortable_shooting_distance:float
 
 
 ##Technical parts of the weapon

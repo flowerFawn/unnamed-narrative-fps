@@ -11,5 +11,6 @@ range = 6.0
 auto_mode = 1
 desired_shooting_distance = 5.0
 maximum_comfortable_shooting_distance = 6.0
+minimum_comfortable_shooting_distance = 1.0
 weapon_type = 1
 metadata/_custom_type_script = "uid://spf2elj4s0kt"

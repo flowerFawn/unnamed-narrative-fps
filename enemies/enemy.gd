@@ -80,6 +80,11 @@ var desired_shooting_distance_squared:float
 ##to save cycles. This is stored in a variable so it doesn't have to be recalculated
 ##each time. Assigned when the new weapon instance is created
 var maximum_comfortable_distance_squared:float
+##Minimum comfortable shooting distance (from weapon.weapon_info) squared.
+##This means the distance squared function can be used, saving a square root
+##to save cycles. This is stored in a variable so it doesn't have to be recalculated
+##each time. Assigned when the new weapon instance is created
+var minimum_comfortable_distance_squared:float
 
 
 
@@ -97,6 +102,8 @@ func setup() -> void:
 	weapon = weapon_type.create_instance()
 	desired_shooting_distance_squared = weapon.weapon_info.desired_shooting_distance ** 2
 	maximum_comfortable_distance_squared = weapon.weapon_info.maximum_comfortable_shooting_distance ** 2
+	minimum_comfortable_distance_squared = weapon.weapon_info.minimum_comfortable_shooting_distance ** 2
+	
 	set_state(EnemyState.WALKING)
 	set_mode(EnemyMode.SIMPLE_POSITIONING)
 
@@ -133,13 +140,20 @@ func shooting_physics_process(delta:float) -> void:
 func idle_physics_process(delta:float) -> void:
 	velocity = Vector3.ZERO
 	
-	
+	#TODO: make this happen less regularly to save needless cpu cycles
 func update_pathfinding() -> void:
 	match mode:
 		EnemyMode.SIMPLE_POSITIONING:
-			pathfinding_agent.target_position = level.player.global_position
+			if desired_shooting_distance_squared < distance_squared_to_player:
+				goal_point = level.player.global_position
+			elif distance_squared_to_player < minimum_comfortable_distance_squared:
+				var direction_from_player_to_enemy:Vector3
+				direction_from_player_to_enemy = level.player.global_position.direction_to(global_position)
+				direction_from_player_to_enemy = direction_from_player_to_enemy.normalized() * sqrt(desired_shooting_distance_squared)
+				goal_point = level.player.global_position + direction_from_player_to_enemy
 		EnemyMode.SIMPLE_SEARCHING:
-			pathfinding_agent.target_position = last_known_player_position
+			goal_point = last_known_player_position
+	pathfinding_agent.target_position = goal_point
 	
 	
 func check_for_state_change() -> void:
@@ -167,7 +181,7 @@ func check_for_state_change() -> void:
 			
 func check_for_mode_change() -> void:
 	if mode == EnemyMode.SIMPLE_POSITIONING:
-		if distance_squared_to_player < desired_shooting_distance_squared:
+		if distance_squared_to_player < desired_shooting_distance_squared and minimum_comfortable_distance_squared < distance_squared_to_player:
 			set_mode(EnemyMode.SIMPLE_SHOOTING)
 		if not has_line_of_sight:
 			set_mode(EnemyMode.SIMPLE_SEARCHING)
@@ -177,8 +191,9 @@ func check_for_mode_change() -> void:
 	if mode == EnemyMode.SIMPLE_SHOOTING:
 		if not has_line_of_sight:
 			set_mode(EnemyMode.SIMPLE_SEARCHING)
-		elif maximum_comfortable_distance_squared < distance_squared_to_player:
+		elif maximum_comfortable_distance_squared < distance_squared_to_player or distance_squared_to_player < minimum_comfortable_distance_squared:
 			set_mode(EnemyMode.SIMPLE_POSITIONING)
+
 		
 			
 			
