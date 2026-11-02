@@ -24,14 +24,24 @@ enum EnemyState {
 	AIRTIME,
 }
 
+enum StrategyUse {
+	NONE,
+	START,
+	FALLBACK,
+	BOTH,
+	FULL,
+}
 
+##Enemy type of this enemy
+@export var enemy_type:EnemyType
+
+@export_category("technical")
 ##The group of strategy points this enemy should use. Strategy points are
 ##marked points in a level which are valuable for a purpose marked in them
 ##such as cover or shooting positions. This group can be queried for information
 ##about these strategy points
 @export var strategy_points:StrategyPointGroup
-##The weapon type that this enemy uses
-@export var weapon_type:WeaponInfo
+
 
 @export_group("base")
 ##Pathfinding agent node used for this enemies pathfinding. Should always
@@ -99,7 +109,7 @@ func _ready() -> void:
 	setup()
 	
 func setup() -> void:
-	weapon = weapon_type.create_instance()
+	weapon = enemy_type.weapon_type.create_instance()
 	desired_shooting_distance_squared = weapon.weapon_info.desired_shooting_distance ** 2
 	maximum_comfortable_distance_squared = weapon.weapon_info.maximum_comfortable_shooting_distance ** 2
 	minimum_comfortable_distance_squared = weapon.weapon_info.minimum_comfortable_shooting_distance ** 2

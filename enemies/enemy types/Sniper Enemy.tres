@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyType" format=3 uid="uid://cliepflhmm776"]
+
+[ext_resource type="Script" uid="uid://d2rqnjgk20ffv" path="res://enemies/enemy_type.gd" id="1_a1yf8"]
+[ext_resource type="Resource" uid="uid://dfvb1oqrqcqxy" path="res://weapons/resources/Sniper.tres" id="2_ysye2"]
+
+[resource]
+script = ExtResource("1_a1yf8")
+weapon_type = ExtResource("2_ysye2")
+strategy_use = 4
+metadata/_custom_type_script = "uid://d2rqnjgk20ffv"
