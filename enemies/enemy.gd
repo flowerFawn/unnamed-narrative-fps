@@ -141,6 +141,8 @@ func idle_physics_process(delta:float) -> void:
 	velocity = Vector3.ZERO
 	
 	#TODO: make this happen less regularly to save needless cpu cycles
+	##Updates the goal point and sets that as the target position for the pathfinding agent
+	##new goal point is dependent on mode and other factors
 func update_pathfinding() -> void:
 	match mode:
 		EnemyMode.SIMPLE_POSITIONING:
@@ -149,13 +151,14 @@ func update_pathfinding() -> void:
 			elif distance_squared_to_player < minimum_comfortable_distance_squared:
 				var direction_from_player_to_enemy:Vector3
 				direction_from_player_to_enemy = level.player.global_position.direction_to(global_position)
-				direction_from_player_to_enemy = direction_from_player_to_enemy.normalized() * sqrt(desired_shooting_distance_squared)
+				direction_from_player_to_enemy = direction_from_player_to_enemy * sqrt(desired_shooting_distance_squared)
 				goal_point = level.player.global_position + direction_from_player_to_enemy
 		EnemyMode.SIMPLE_SEARCHING:
 			goal_point = last_known_player_position
 	pathfinding_agent.target_position = goal_point
 	
 	
+##Checks if the enemy needs to change state, and changes it if so
 func check_for_state_change() -> void:
 	if state != EnemyState.AIRTIME:
 		if not airtime_raycast.is_colliding():
@@ -179,6 +182,7 @@ func check_for_state_change() -> void:
 			else:
 				set_state(EnemyState.IDLE)
 			
+##checks if the enemy needs to change mode, and updates it if so
 func check_for_mode_change() -> void:
 	if mode == EnemyMode.SIMPLE_POSITIONING:
 		if distance_squared_to_player < desired_shooting_distance_squared and minimum_comfortable_distance_squared < distance_squared_to_player:
@@ -196,31 +200,31 @@ func check_for_mode_change() -> void:
 
 		
 			
-			
+##updates variables the enemy uses to determine behaviour
 func gather_info() -> void:
 	update_line_of_sight()
 	update_player_distance()
 	update_known_player_position()
 	
-	
+##updates the line of sight raycast and if the enemy has line of sight
 func update_line_of_sight() -> void:
 	line_of_sight_raycast.target_position = level.player.global_position - global_position
 	has_line_of_sight = not line_of_sight_raycast.is_colliding()
 	
-
+##updates the distance squared
 func update_player_distance() -> void:
 	distance_squared_to_player = global_position.distance_squared_to(level.player.global_position)
 	
-			
+##updates the known position of the player only if the enemy has line of sight
 func update_known_player_position() -> void:
 	if has_line_of_sight:
 		last_known_player_position = level.player.global_position
 			
-			
+##sets the state
 func set_state(new_state:EnemyState) -> void:
 	state = new_state
 	
-		
+##sets the state, as well as other variables that should be changed depending on the state
 func set_mode(new_mode:EnemyMode) -> void:
 	mode = new_mode
 	match new_mode:

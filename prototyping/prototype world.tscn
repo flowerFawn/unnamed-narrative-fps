@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cxkbqcnn3cje0" path="res://enemies/enemy.tscn" id="4_8e06d"]
 [ext_resource type="Resource" uid="uid://4jr44hepu3pe" path="res://weapons/resources/Pistol.tres" id="6_c7o8b"]
 [ext_resource type="Script" uid="uid://cfbv5j06c4l4j" path="res://world/strategy_point_group.gd" id="6_vpdsa"]
-[ext_resource type="Script" uid="uid://cybksx0q1t5jg" path="res://prototyping/strategy_point.gd" id="7_8y3gp"]
+[ext_resource type="Script" uid="uid://cybksx0q1t5jg" path="res://world/strategy_point.gd" id="7_8y3gp"]
 [ext_resource type="Resource" uid="uid://d1a18glwpd3sp" path="res://weapons/resources/Auto Rifle.tres" id="7_i723x"]
 [ext_resource type="Resource" uid="uid://dfvb1oqrqcqxy" path="res://weapons/resources/Sniper.tres" id="8_i723x"]
 
@@ -192,10 +192,12 @@ strategy_points = NodePath("../Node3D")
 weapon_type = ExtResource("8_i723x")
 level = NodePath("..")
 
-[node name="Node3D" type="Node3D" parent="." unique_id=1383317547]
+[node name="Node3D" type="Node3D" parent="." unique_id=1383317547 node_paths=PackedStringArray("level")]
 script = ExtResource("6_vpdsa")
+level = NodePath("..")
 
 [node name="StrategyPoint" type="Marker3D" parent="Node3D" unique_id=262354705]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.317293, 4.097894, -13.645883)
 script = ExtResource("7_8y3gp")
+type = 3
 metadata/_custom_type_script = "uid://cybksx0q1t5jg"

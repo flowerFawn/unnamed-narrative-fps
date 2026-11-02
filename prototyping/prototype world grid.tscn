@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cxkbqcnn3cje0" path="res://enemies/enemy.tscn" id="4_8e06d"]
 [ext_resource type="MeshLibrary" uid="uid://dx563rejd547l" path="res://prototyping/mesh_library.tres" id="6_8y3gp"]
 [ext_resource type="Script" uid="uid://cfbv5j06c4l4j" path="res://world/strategy_point_group.gd" id="6_vpdsa"]
-[ext_resource type="Script" uid="uid://cybksx0q1t5jg" path="res://prototyping/strategy_point.gd" id="7_8y3gp"]
+[ext_resource type="Script" uid="uid://cybksx0q1t5jg" path="res://world/strategy_point.gd" id="7_8y3gp"]
 
 [sub_resource type="Animation" id="Animation_3avtf"]
 length = 0.001
