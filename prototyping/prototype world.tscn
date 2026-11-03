@@ -168,12 +168,6 @@ enemy_type = ExtResource("6_i723x")
 strategy_points = NodePath("../Node3D")
 level = NodePath("..")
 
-[node name="Enemy7" parent="." unique_id=1050992944 node_paths=PackedStringArray("strategy_points", "level") instance=ExtResource("4_8e06d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.265641, -2.450615, 10.814041)
-enemy_type = ExtResource("6_i723x")
-strategy_points = NodePath("../Node3D")
-level = NodePath("..")
-
 [node name="Enemy3" parent="." unique_id=484134852 node_paths=PackedStringArray("strategy_points", "level") instance=ExtResource("4_8e06d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.391113, 0.64182127, -3.6781135)
 enemy_type = ExtResource("7_m83a0")
@@ -198,12 +192,72 @@ enemy_type = ExtResource("8_sm2w2")
 strategy_points = NodePath("../Node3D")
 level = NodePath("..")
 
+[node name="Enemy7" parent="." unique_id=1050992944 node_paths=PackedStringArray("strategy_points", "level") instance=ExtResource("4_8e06d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.265641, -2.450615, 10.814041)
+enemy_type = ExtResource("6_i723x")
+strategy_points = NodePath("../Node3D")
+level = NodePath("..")
+
 [node name="Node3D" type="Node3D" parent="." unique_id=1383317547 node_paths=PackedStringArray("level")]
 script = ExtResource("6_vpdsa")
 level = NodePath("..")
 
 [node name="StrategyPoint" type="Marker3D" parent="Node3D" unique_id=262354705]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.317293, 4.097894, -13.645883)
+script = ExtResource("7_8y3gp")
+type = 3
+metadata/_custom_type_script = "uid://cybksx0q1t5jg"
+
+[node name="StrategyPoint2" type="Marker3D" parent="Node3D" unique_id=1601978824]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.317293, -2.963965, 17.328728)
+script = ExtResource("7_8y3gp")
+type = 3
+metadata/_custom_type_script = "uid://cybksx0q1t5jg"
+
+[node name="StrategyPoint3" type="Marker3D" parent="Node3D" unique_id=1632135164]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.317293, -2.963965, 7.494133)
+script = ExtResource("7_8y3gp")
+type = 3
+metadata/_custom_type_script = "uid://cybksx0q1t5jg"
+
+[node name="StrategyPoint4" type="Marker3D" parent="Node3D" unique_id=12760354]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.317293, -2.963965, 2.591423)
+script = ExtResource("7_8y3gp")
+type = 3
+metadata/_custom_type_script = "uid://cybksx0q1t5jg"
+
+[node name="StrategyPoint5" type="Marker3D" parent="Node3D" unique_id=975935299]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2572346, -2.963965, 15.958)
+script = ExtResource("7_8y3gp")
+type = 3
+metadata/_custom_type_script = "uid://cybksx0q1t5jg"
+
+[node name="StrategyPoint6" type="Marker3D" parent="Node3D" unique_id=1971811140]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0442944, 1.0586181, 5.84301)
+script = ExtResource("7_8y3gp")
+type = 3
+metadata/_custom_type_script = "uid://cybksx0q1t5jg"
+
+[node name="StrategyPoint7" type="Marker3D" parent="Node3D" unique_id=130973887]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.750349, 1.0586181, 0.28269196)
+script = ExtResource("7_8y3gp")
+type = 3
+metadata/_custom_type_script = "uid://cybksx0q1t5jg"
+
+[node name="StrategyPoint8" type="Marker3D" parent="Node3D" unique_id=952956530]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.970503, 1.0586181, -4.862816)
+script = ExtResource("7_8y3gp")
+type = 3
+metadata/_custom_type_script = "uid://cybksx0q1t5jg"
+
+[node name="StrategyPoint9" type="Marker3D" parent="Node3D" unique_id=385282570]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.534319, -2.5237184, -14.010822)
+script = ExtResource("7_8y3gp")
+type = 3
+metadata/_custom_type_script = "uid://cybksx0q1t5jg"
+
+[node name="StrategyPoint10" type="Marker3D" parent="Node3D" unique_id=831402428]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.154394, 4.0272155, -14.010822)
 script = ExtResource("7_8y3gp")
 type = 3
 metadata/_custom_type_script = "uid://cybksx0q1t5jg"

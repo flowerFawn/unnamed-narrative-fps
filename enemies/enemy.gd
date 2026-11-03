@@ -114,20 +114,21 @@ func setup() -> void:
 	maximum_comfortable_distance_squared = weapon.weapon_info.maximum_comfortable_shooting_distance ** 2
 	minimum_comfortable_distance_squared = weapon.weapon_info.minimum_comfortable_shooting_distance ** 2
 	
-	set_state(EnemyState.WALKING)
-	set_mode(EnemyMode.SIMPLE_POSITIONING)
+	match enemy_type.strategy_use:
+		StrategyUse.NONE, StrategyUse.FALLBACK:
+			set_mode(EnemyMode.SIMPLE_POSITIONING)
+		StrategyUse.START, StrategyUse.BOTH, StrategyUse.FULL:
+			set_mode(EnemyMode.STRATEGIC_POSITIONING)
 
 func _process(delta: float) -> void:
-	$Label3D.text = StrategyUse.keys()[enemy_type.strategy_use] + ": " + \
-	EnemyMode.keys()[mode]
+	$Label3D.text = StrategyUse.keys()[enemy_type.strategy_use] + ", " + \
+	EnemyMode.keys()[mode] + ", " + EnemyState.keys()[state]
 
 func _physics_process(delta: float) -> void:
 	gather_info()
 	check_for_mode_change_triggers()
 	check_for_state_change()
 	update_pathfinding()
-	print(EnemyState.keys()[state])
-	print(EnemyMode.keys()[mode])
 	match state:
 		EnemyState.WALKING:
 			moving_physics_process(delta)
@@ -168,6 +169,8 @@ func update_pathfinding() -> void:
 				goal_point = level.player.global_position + direction_from_player_to_enemy
 		EnemyMode.SIMPLE_SEARCHING:
 			goal_point = last_known_player_position
+		EnemyMode.STRATEGIC_POSITIONING:
+			goal_point = goal_strategy_point.global_position
 	pathfinding_agent.target_position = goal_point
 	
 	
@@ -242,6 +245,8 @@ func set_state(new_state:EnemyState) -> void:
 	
 ##sets the state, as well as other variables that should be changed depending on the state
 func set_mode(new_mode:EnemyMode) -> void:
+	if mode == EnemyMode.STRATEGIC_POSITIONING or mode == EnemyMode.STRATEGIC_SHOOTING: #before change
+		goal_strategy_point.leave()
 	mode = new_mode
 	match new_mode:
 		EnemyMode.SIMPLE_SHOOTING:
@@ -255,6 +260,15 @@ func set_mode(new_mode:EnemyMode) -> void:
 			is_pathfinding = true
 			is_shooting = false
 			goal_point = last_known_player_position
+		EnemyMode.STRATEGIC_POSITIONING:
+			is_pathfinding = true
+			is_shooting = false
+			goal_strategy_point = strategy_points.get_closest_point(global_position)
+			goal_strategy_point.occupied = true
+		EnemyMode.STRATEGIC_SHOOTING:
+			is_pathfinding = false
+			is_shooting = true
+			
 			
 			
 func mode_change_trigger_player_moves_too_close() -> void:
@@ -291,11 +305,9 @@ func mode_change_trigger_found_player() -> void:
 		StrategyUse.FALLBACK:
 			set_mode(EnemyMode.STRATEGIC_POSITIONING)
 		
-		
 
-		
-		
-func mode_change_trigger_reached_strategy_point() -> void:
-	match enemy_type.strategy_use:
-		StrategyUse.FALLBACK, StrategyUse.BOTH, StrategyUse.FULL:
-			set_mode(EnemyMode.STRATEGIC_SHOOTING)
+func mode_change_trigger_target_reached() -> void:
+	match  enemy_type.strategy_use:
+		StrategyUse.START, StrategyUse.FALLBACK, StrategyUse.BOTH, StrategyUse.FULL:
+			if mode == EnemyMode.STRATEGIC_POSITIONING:
+				set_mode(EnemyMode.STRATEGIC_SHOOTING)

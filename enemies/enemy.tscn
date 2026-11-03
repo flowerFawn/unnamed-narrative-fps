@@ -25,6 +25,7 @@ shape = SubResource("CapsuleShape3D_vmthy")
 mesh = SubResource("CapsuleMesh_vmthy")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=887415089]
+target_desired_distance = 0.5
 path_height_offset = -0.9
 debug_enabled = true
 
@@ -37,3 +38,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.60703266, 0)
 [node name="Label3D" type="Label3D" parent="." unique_id=2023954163]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1883502, 0)
 billboard = 1
+
+[connection signal="navigation_finished" from="NavigationAgent3D" to="." method="mode_change_trigger_target_reached"]
