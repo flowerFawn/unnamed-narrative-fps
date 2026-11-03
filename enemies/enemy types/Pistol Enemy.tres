@@ -6,4 +6,5 @@
 [resource]
 script = ExtResource("1_a8yky")
 weapon_type = ExtResource("2_sd5wk")
+enemy_behaviour = 1
 metadata/_custom_type_script = "uid://d2rqnjgk20ffv"

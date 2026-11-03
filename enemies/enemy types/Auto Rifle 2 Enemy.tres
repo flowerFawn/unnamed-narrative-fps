@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EnemyType" format=3 uid="uid://ckop36f4a34jc"]
+
+[ext_resource type="Script" uid="uid://d2rqnjgk20ffv" path="res://enemies/enemy_type.gd" id="1_pmeag"]
+[ext_resource type="Resource" uid="uid://d1a18glwpd3sp" path="res://weapons/resources/Auto Rifle.tres" id="2_egdph"]
+
+[resource]
+script = ExtResource("1_pmeag")
+weapon_type = ExtResource("2_egdph")
+strategy_use = 1
+enemy_behaviour = 1
+metadata/_custom_type_script = "uid://d2rqnjgk20ffv"

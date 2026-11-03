@@ -5,10 +5,11 @@
 [ext_resource type="PackedScene" uid="uid://diprkmfyksj10" path="res://prototyping/target.tscn" id="2_3avtf"]
 [ext_resource type="PackedScene" uid="uid://bets5diqo2jft" path="res://prototyping/placeholder arena 2.glb" id="2_8y3gp"]
 [ext_resource type="PackedScene" uid="uid://cxkbqcnn3cje0" path="res://enemies/enemy.tscn" id="4_8e06d"]
-[ext_resource type="Resource" uid="uid://bgkyfeuow27t4" path="res://enemies/enemy types/Auto Rifle Enemy.tres" id="6_i723x"]
+[ext_resource type="Resource" uid="uid://bgkyfeuow27t4" path="res://enemies/enemy types/Auto Rifle 1 Enemy.tres" id="6_i723x"]
 [ext_resource type="Script" uid="uid://cfbv5j06c4l4j" path="res://world/strategy_point_group.gd" id="6_vpdsa"]
 [ext_resource type="Script" uid="uid://cybksx0q1t5jg" path="res://world/strategy_point.gd" id="7_8y3gp"]
 [ext_resource type="Resource" uid="uid://b2jbp06lix7w6" path="res://enemies/enemy types/Pistol Enemy.tres" id="7_m83a0"]
+[ext_resource type="Resource" uid="uid://ckop36f4a34jc" path="res://enemies/enemy types/Auto Rifle 2 Enemy.tres" id="7_sm2w2"]
 [ext_resource type="Resource" uid="uid://cliepflhmm776" path="res://enemies/enemy types/Sniper Enemy.tres" id="8_sm2w2"]
 
 [sub_resource type="Animation" id="Animation_3avtf"]
@@ -164,7 +165,7 @@ level = NodePath("..")
 
 [node name="Enemy2" parent="." unique_id=139700930 node_paths=PackedStringArray("strategy_points", "level") instance=ExtResource("4_8e06d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.391113, 0.64182127, 5.652597)
-enemy_type = ExtResource("6_i723x")
+enemy_type = ExtResource("7_sm2w2")
 strategy_points = NodePath("../Node3D")
 level = NodePath("..")
 

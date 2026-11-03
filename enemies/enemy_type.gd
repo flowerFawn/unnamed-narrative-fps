@@ -5,3 +5,5 @@ class_name EnemyType
 @export var weapon_type:WeaponInfo
 ##Type of strategy this enemy uses
 @export var strategy_use:Enemy.StrategyUse
+##Type of behaviour this enemy uses
+@export var enemy_behaviour:Enemy.StrategyBehaviour

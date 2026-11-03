@@ -32,6 +32,12 @@ enum StrategyUse {
 	FULL,
 }
 
+##How the enemy behaves
+enum StrategyBehaviour {
+	AMBUSH,
+	CHASE,
+}
+
 ##Enemy type of this enemy
 @export var enemy_type:EnemyType
 
@@ -122,7 +128,8 @@ func setup() -> void:
 
 func _process(delta: float) -> void:
 	$Label3D.text = StrategyUse.keys()[enemy_type.strategy_use] + ", " + \
-	EnemyMode.keys()[mode] + ", " + EnemyState.keys()[state]
+	EnemyMode.keys()[mode] + ", " + EnemyState.keys()[state] + ", " + \
+	StrategyBehaviour.keys()[enemy_type.enemy_behaviour]
 
 func _physics_process(delta: float) -> void:
 	gather_info()
@@ -209,7 +216,7 @@ func check_for_mode_change_triggers() -> void:
 		EnemyMode.SIMPLE_SEARCHING:
 			if has_line_of_sight:
 				mode_change_trigger_found_player()
-		EnemyMode.SIMPLE_SHOOTING:
+		EnemyMode.SIMPLE_SHOOTING, EnemyMode.STRATEGIC_SHOOTING:
 			if not has_line_of_sight:
 				mode_change_trigger_lost_player()
 			elif maximum_comfortable_distance_squared < distance_squared_to_player:
@@ -282,9 +289,19 @@ func mode_change_trigger_player_moves_too_close() -> void:
 func mode_change_trigger_player_leaves_range() -> void:
 	match  enemy_type.strategy_use:
 		StrategyUse.NONE, StrategyUse.START, StrategyUse.FALLBACK:
-			set_mode(EnemyMode.SIMPLE_POSITIONING)
+			match mode:
+				EnemyMode.SIMPLE_SHOOTING:
+					set_mode(EnemyMode.SIMPLE_SEARCHING)
+				EnemyMode.STRATEGIC_SHOOTING:
+					if enemy_type.enemy_behaviour == StrategyBehaviour.CHASE:
+						set_mode(EnemyMode.STRATEGIC_POSITIONING)
 		StrategyUse.BOTH, StrategyUse.FULL:
-			set_mode(EnemyMode.STRATEGIC_POSITIONING)
+			match mode:
+				EnemyMode.SIMPLE_SHOOTING:
+					set_mode(EnemyMode.SIMPLE_SEARCHING)
+				EnemyMode.STRATEGIC_SHOOTING:
+					if enemy_type.enemy_behaviour == StrategyBehaviour.CHASE:
+						set_mode(EnemyMode.STRATEGIC_POSITIONING)
 			
 			
 func mode_change_trigger_desired_distance() -> void:
@@ -294,15 +311,22 @@ func mode_change_trigger_desired_distance() -> void:
 			
 			
 func mode_change_trigger_lost_player() -> void:
-	if enemy_type.strategy_use != StrategyUse.FULL:
-		set_mode(EnemyMode.SIMPLE_SEARCHING)
+	match enemy_type.strategy_use:
+		StrategyUse.NONE, StrategyUse.START:
+			match mode:
+				EnemyMode.SIMPLE_POSITIONING, EnemyMode.SIMPLE_SHOOTING:
+					set_mode(EnemyMode.SIMPLE_SEARCHING)
+				EnemyMode.STRATEGIC_POSITIONING, EnemyMode.STRATEGIC_SHOOTING:
+					if enemy_type.enemy_behaviour == StrategyBehaviour.CHASE:
+						set_mode(EnemyMode.SIMPLE_SEARCHING)
+		
 		
 		
 func mode_change_trigger_found_player() -> void:
 	match enemy_type.strategy_use:
 		StrategyUse.NONE, StrategyUse.START, StrategyUse.BOTH:
 			set_mode(EnemyMode.SIMPLE_POSITIONING)
-		StrategyUse.FALLBACK:
+		StrategyUse.FALLBACK, StrategyUse.FULL:
 			set_mode(EnemyMode.STRATEGIC_POSITIONING)
 		
 
