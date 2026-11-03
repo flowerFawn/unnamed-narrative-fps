@@ -117,10 +117,13 @@ func setup() -> void:
 	set_state(EnemyState.WALKING)
 	set_mode(EnemyMode.SIMPLE_POSITIONING)
 
+func _process(delta: float) -> void:
+	$Label3D.text = StrategyUse.keys()[enemy_type.strategy_use] + ": " + \
+	EnemyMode.keys()[mode]
 
 func _physics_process(delta: float) -> void:
 	gather_info()
-	check_for_mode_change()
+	check_for_mode_change_triggers()
 	check_for_state_change()
 	update_pathfinding()
 	print(EnemyState.keys()[state])
@@ -193,20 +196,23 @@ func check_for_state_change() -> void:
 				set_state(EnemyState.IDLE)
 			
 ##checks if the enemy needs to change mode, and updates it if so
-func check_for_mode_change() -> void:
-	if mode == EnemyMode.SIMPLE_POSITIONING:
-		if distance_squared_to_player < desired_shooting_distance_squared and minimum_comfortable_distance_squared < distance_squared_to_player:
-			set_mode(EnemyMode.SIMPLE_SHOOTING)
-		if not has_line_of_sight:
-			set_mode(EnemyMode.SIMPLE_SEARCHING)
-	if mode == EnemyMode.SIMPLE_SEARCHING:
-		if has_line_of_sight:
-			set_mode(EnemyMode.SIMPLE_POSITIONING)
-	if mode == EnemyMode.SIMPLE_SHOOTING:
-		if not has_line_of_sight:
-			set_mode(EnemyMode.SIMPLE_SEARCHING)
-		elif maximum_comfortable_distance_squared < distance_squared_to_player or distance_squared_to_player < minimum_comfortable_distance_squared:
-			set_mode(EnemyMode.SIMPLE_POSITIONING)
+func check_for_mode_change_triggers() -> void:
+	match mode:
+		EnemyMode.SIMPLE_POSITIONING:
+			if distance_squared_to_player < desired_shooting_distance_squared and minimum_comfortable_distance_squared < distance_squared_to_player:
+				mode_change_trigger_desired_distance()
+			if not has_line_of_sight:
+				mode_change_trigger_lost_player()
+		EnemyMode.SIMPLE_SEARCHING:
+			if has_line_of_sight:
+				mode_change_trigger_found_player()
+		EnemyMode.SIMPLE_SHOOTING:
+			if not has_line_of_sight:
+				mode_change_trigger_lost_player()
+			elif maximum_comfortable_distance_squared < distance_squared_to_player:
+				mode_change_trigger_player_leaves_range()
+			elif distance_squared_to_player < minimum_comfortable_distance_squared:
+				mode_change_trigger_player_moves_too_close()
 
 		
 			
@@ -251,3 +257,45 @@ func set_mode(new_mode:EnemyMode) -> void:
 			goal_point = last_known_player_position
 			
 			
+func mode_change_trigger_player_moves_too_close() -> void:
+	match enemy_type.strategy_use:
+		StrategyUse.NONE, StrategyUse.START:
+			set_mode(EnemyMode.SIMPLE_POSITIONING)
+		StrategyUse.FALLBACK, StrategyUse.BOTH:
+			set_mode(EnemyMode.STRATEGIC_POSITIONING)
+			
+			
+func mode_change_trigger_player_leaves_range() -> void:
+	match  enemy_type.strategy_use:
+		StrategyUse.NONE, StrategyUse.START, StrategyUse.FALLBACK:
+			set_mode(EnemyMode.SIMPLE_POSITIONING)
+		StrategyUse.BOTH, StrategyUse.FULL:
+			set_mode(EnemyMode.STRATEGIC_POSITIONING)
+			
+			
+func mode_change_trigger_desired_distance() -> void:
+	match enemy_type.strategy_use:
+		StrategyUse.NONE, StrategyUse.START, StrategyUse.BOTH:
+			set_mode(EnemyMode.SIMPLE_SHOOTING)
+			
+			
+func mode_change_trigger_lost_player() -> void:
+	if enemy_type.strategy_use != StrategyUse.FULL:
+		set_mode(EnemyMode.SIMPLE_SEARCHING)
+		
+		
+func mode_change_trigger_found_player() -> void:
+	match enemy_type.strategy_use:
+		StrategyUse.NONE, StrategyUse.START, StrategyUse.BOTH:
+			set_mode(EnemyMode.SIMPLE_POSITIONING)
+		StrategyUse.FALLBACK:
+			set_mode(EnemyMode.STRATEGIC_POSITIONING)
+		
+		
+
+		
+		
+func mode_change_trigger_reached_strategy_point() -> void:
+	match enemy_type.strategy_use:
+		StrategyUse.FALLBACK, StrategyUse.BOTH, StrategyUse.FULL:
+			set_mode(EnemyMode.STRATEGIC_SHOOTING)
