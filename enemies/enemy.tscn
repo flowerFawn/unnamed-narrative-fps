@@ -12,7 +12,7 @@ albedo_color = Color(1, 0, 0, 1)
 material = SubResource("StandardMaterial3D_y8mhm")
 height = 1.8
 
-[node name="Enemy" type="CharacterBody3D" unique_id=680560556 node_paths=PackedStringArray("pathfinding_agent", "airtime_raycast", "line_of_sight_raycast")]
+[node name="Enemy" type="CharacterBody3D" unique_id=680560556 node_paths=PackedStringArray("pathfinding_agent", "airtime_raycast", "line_of_sight_raycast") groups=["hitable"]]
 script = ExtResource("1_fw1ev")
 pathfinding_agent = NodePath("NavigationAgent3D")
 airtime_raycast = NodePath("AirtimeRaycast")

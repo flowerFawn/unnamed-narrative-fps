@@ -3,6 +3,9 @@ class_name Enemy
 
 const SPEED:float = 1.5
 
+var max_hp:float = 100
+var hp:float = max_hp
+
 
 ##What the enemy has as its current goal
 enum EnemyMode{
@@ -130,6 +133,8 @@ func _process(delta: float) -> void:
 	$Label3D.text = StrategyUse.keys()[enemy_type.strategy_use] + ", " + \
 	EnemyMode.keys()[mode] + ", " + EnemyState.keys()[state] + ", " + \
 	StrategyBehaviour.keys()[enemy_type.enemy_behaviour]
+
+#region BEHAVIOUR
 
 func _physics_process(delta: float) -> void:
 	gather_info()
@@ -335,3 +340,10 @@ func mode_change_trigger_target_reached() -> void:
 		StrategyUse.START, StrategyUse.FALLBACK, StrategyUse.BOTH, StrategyUse.FULL:
 			if mode == EnemyMode.STRATEGIC_POSITIONING:
 				set_mode(EnemyMode.STRATEGIC_SHOOTING)
+
+#endregion
+
+func hit(damage:float) -> void:
+	hp -= damage
+	if hp < 0:
+		queue_free()
