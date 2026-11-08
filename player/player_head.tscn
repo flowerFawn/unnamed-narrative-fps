@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://0hpsvqsuisno"]
 
-[ext_resource type="Script" uid="uid://d3m54dkfp81lh" path="res://player/head.gd" id="1_quj11"]
+[ext_resource type="Script" uid="uid://d3m54dkfp81lh" path="res://player/player_head.gd" id="1_quj11"]
 [ext_resource type="PackedScene" uid="uid://b7qauu8gsgoss" path="res://player/weapon_handler.tscn" id="2_l8da5"]
 [ext_resource type="Script" uid="uid://c52dnyvcyv6bk" path="res://weapons/scripts/gun.gd" id="3_5yk4i"]
 [ext_resource type="Script" uid="uid://bs40pe42iot7c" path="res://weapons/scripts/melee.gd" id="3_l8da5"]

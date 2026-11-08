@@ -62,7 +62,8 @@ enum StrategyBehaviour {
 @export var airtime_raycast:RayCast3D
 ##Raycast pointed at the player to check for line of sight
 @export var line_of_sight_raycast:RayCast3D
-
+##Enemy head, controlling weapon use
+@export var head:EnemyHead
 ##Reference to the weapon this enemy is using. Generated based on weapon type
 ##when the enemy is created
 var weapon:Weapon
@@ -122,7 +123,7 @@ func setup() -> void:
 	desired_shooting_distance_squared = weapon.weapon_info.desired_shooting_distance ** 2
 	maximum_comfortable_distance_squared = weapon.weapon_info.maximum_comfortable_shooting_distance ** 2
 	minimum_comfortable_distance_squared = weapon.weapon_info.minimum_comfortable_shooting_distance ** 2
-	
+	head.add_child(weapon)
 	match enemy_type.strategy_use:
 		StrategyUse.NONE, StrategyUse.FALLBACK:
 			set_mode(EnemyMode.SIMPLE_POSITIONING)
@@ -141,6 +142,9 @@ func _physics_process(delta: float) -> void:
 	check_for_mode_change_triggers()
 	check_for_state_change()
 	update_pathfinding()
+	head.look_towards(last_known_player_position)
+	if is_shooting:
+		do_shooting()
 	match state:
 		EnemyState.WALKING:
 			moving_physics_process(delta)
@@ -342,6 +346,9 @@ func mode_change_trigger_target_reached() -> void:
 				set_mode(EnemyMode.STRATEGIC_SHOOTING)
 
 #endregion
+
+func do_shooting() -> void:
+	weapon.attempt_shoot()
 
 func hit(damage:float) -> void:
 	hp -= damage

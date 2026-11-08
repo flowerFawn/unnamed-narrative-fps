@@ -10,4 +10,4 @@ func _shoot() -> void:
 	if ray.is_colliding():
 		var target:PhysicsBody3D = ray.get_collider()
 		attempt_hit(target)
-	ray.queue_free()
+	#ray.queue_free()

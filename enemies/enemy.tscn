@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://cxkbqcnn3cje0"]
 
 [ext_resource type="Script" uid="uid://bq54dd40hugcj" path="res://enemies/enemy.gd" id="1_fw1ev"]
+[ext_resource type="Script" uid="uid://chew7hiawbwxe" path="res://enemies/enemy_head.gd" id="2_7frlh"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_vmthy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vmthy"]
 height = 1.8
@@ -12,11 +15,19 @@ albedo_color = Color(1, 0, 0, 1)
 material = SubResource("StandardMaterial3D_y8mhm")
 height = 1.8
 
-[node name="Enemy" type="CharacterBody3D" unique_id=680560556 node_paths=PackedStringArray("pathfinding_agent", "airtime_raycast", "line_of_sight_raycast") groups=["hitable"]]
+[node name="Enemy" type="CharacterBody3D" unique_id=680560556 node_paths=PackedStringArray("pathfinding_agent", "airtime_raycast", "line_of_sight_raycast", "head") groups=["hitable"]]
 script = ExtResource("1_fw1ev")
 pathfinding_agent = NodePath("NavigationAgent3D")
 airtime_raycast = NodePath("AirtimeRaycast")
 line_of_sight_raycast = NodePath("LOSRaycast")
+head = NodePath("EnemyHead")
+
+[node name="EnemyHead" type="Node3D" parent="." unique_id=1261952633]
+script = ExtResource("2_7frlh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EnemyHead" unique_id=1477299455]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.89334846, 0)
+mesh = SubResource("PrismMesh_vmthy")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=60541016]
 shape = SubResource("CapsuleShape3D_vmthy")
