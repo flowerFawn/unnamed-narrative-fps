@@ -39,6 +39,12 @@ func _ready() -> void:
 ##specifically required setup
 func setup() -> void:
 	pass
+	
+	
+##subroutine to be overwritten in subclasses, anything that should be done
+##when the weapon/actor using it is being removed and freed from memory
+func cleanup() -> void:
+	pass
 
 ##Checks if able to shoot, and if so, does shoot.
 ##After shooting calls _shot_end() to start the cooldown.

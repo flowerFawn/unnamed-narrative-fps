@@ -353,4 +353,9 @@ func do_shooting() -> void:
 func hit(damage:float) -> void:
 	hp -= damage
 	if hp < 0:
-		queue_free()
+		die()
+		
+		
+func die() -> void:
+	weapon.cleanup()
+	queue_free()

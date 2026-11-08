@@ -3,6 +3,7 @@ class_name WeaponGun
 
 
 var bullet_trail_mesh:BoxMesh
+var active_trails:Array[MeshInstance3D]
 
 func setup() -> void:
 	var trail_material:StandardMaterial3D
@@ -35,6 +36,14 @@ func _shot_visuals() -> void:
 	trail_instance.global_position = global_position
 	trail_instance.global_basis = global_basis
 	trail_instance.global_position += -global_basis.z.normalized() * weapon_info.range / 2
+	active_trails.append(trail_instance)
 	trail_tween.tween_property(trail_instance.mesh.material, "albedo_color", Color(1, 1, 1, 0), weapon_info.visual_effect_time)
 	await trail_tween.finished
+	active_trails.erase(trail_instance) #probably ungodly inefficient and should be optimised
+	#TODO: maybe change the append and erase into using specific indexes and note which are clear?
 	trail_instance.queue_free()
+	
+	
+func cleanup() -> void:
+	for trail:MeshInstance3D in active_trails:
+		trail.queue_free()
