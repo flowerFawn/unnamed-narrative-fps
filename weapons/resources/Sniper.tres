@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="WeaponInfo" format=3 uid="uid://dfvb1oqrqcqxy"]
 
 [ext_resource type="Script" uid="uid://spf2elj4s0kt" path="res://weapons/weapon_info.gd" id="1_bwww8"]
+[ext_resource type="PackedScene" uid="uid://b8art13p6snog" path="res://weapons/decal.tscn" id="2_jmshy"]
 
 [resource]
 script = ExtResource("1_bwww8")
@@ -11,5 +12,7 @@ range = 50.0
 desired_shooting_distance = 40.0
 maximum_comfortable_shooting_distance = 50.0
 minimum_comfortable_shooting_distance = 30.0
+visual_effect_time = 2.5
+weapon_decal = ExtResource("2_jmshy")
 weapon_type = 1
 metadata/_custom_type_script = "uid://spf2elj4s0kt"

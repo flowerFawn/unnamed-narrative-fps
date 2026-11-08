@@ -1,6 +1,22 @@
 [gd_resource type="Resource" script_class="WeaponInfo" format=3 uid="uid://4jr44hepu3pe"]
 
 [ext_resource type="Script" uid="uid://spf2elj4s0kt" path="res://weapons/weapon_info.gd" id="1_i2rap"]
+[ext_resource type="Texture2D" uid="uid://cum1m08rrsemk" path="res://assets/gunshot_decal.png" id="2_d777n"]
+
+[sub_resource type="PackedScene" id="PackedScene_r18ln"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("Decal", "Decal", "size", "texture_albedo", "distance_fade_enabled"),
+"node_count": 1,
+"node_ids": PackedInt32Array(26858741),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 3, 2, 0, 3, 1, 4, 2, 0),
+"variants": [Vector3(0.1, 0.1, 0.1), ExtResource("2_d777n"), true],
+"version": 3
+}
 
 [resource]
 script = ExtResource("1_i2rap")
@@ -12,5 +28,7 @@ auto_mode = 1
 desired_shooting_distance = 5.0
 maximum_comfortable_shooting_distance = 6.0
 minimum_comfortable_shooting_distance = 2.0
+visual_effect_time = 0.4
+weapon_decal = SubResource("PackedScene_r18ln")
 weapon_type = 1
 metadata/_custom_type_script = "uid://spf2elj4s0kt"

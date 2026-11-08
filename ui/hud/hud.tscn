@@ -14,7 +14,6 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Crosshair" type="TextureRect" parent="Hud" unique_id=1266657256]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

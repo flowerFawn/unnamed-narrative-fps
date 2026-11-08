@@ -8,6 +8,8 @@ enum WeaponType {
 }
 
 
+@export_group("Details")
+
 ##Name of the weapon
 @export var name:String
 ##Damage dealt by the weapon
@@ -34,6 +36,12 @@ enum WeaponType {
 ##Distance an enemy must be from the player while in simple shooting without
 ##repositioning (if the player comes this close, they will walk away)
 @export var minimum_comfortable_shooting_distance:float
+
+@export_group("Visuals")
+##How long a visual effect created by this weapon will last eg.  bullet trails (seconds)
+@export var visual_effect_time:float
+##What decal the weapon will create if needed (as a packed scene)
+@export var weapon_decal:PackedScene
 
 
 ##Technical parts of the weapon

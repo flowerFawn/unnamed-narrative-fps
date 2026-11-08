@@ -1,7 +1,7 @@
 extends Weapon
 class_name WeaponGun
 
-var bullet_decal:PackedScene = load("uid://b8art13p6snog")
+
 var bullet_trail_mesh:BoxMesh
 
 func setup() -> void:
@@ -23,7 +23,7 @@ func _shoot() -> void:
 		var target:PhysicsBody3D = ray.get_collider()
 		attempt_hit(target)
 		if not target.is_in_group(&"hitable"):
-			_decal_visual(ray.get_collision_point(), bullet_decal)
+			_decal_visual(ray.get_collision_point(), weapon_info.weapon_decal)
 	#ray.queue_free()
 
 func _shot_visuals() -> void:
@@ -35,6 +35,6 @@ func _shot_visuals() -> void:
 	trail_instance.global_position = global_position
 	trail_instance.global_basis = global_basis
 	trail_instance.global_position += -global_basis.z.normalized() * weapon_info.range / 2
-	trail_tween.tween_property(trail_instance.mesh.material, "albedo_color", Color(1, 1, 1, 0), 0.5)
+	trail_tween.tween_property(trail_instance.mesh.material, "albedo_color", Color(1, 1, 1, 0), weapon_info.visual_effect_time)
 	await trail_tween.finished
 	trail_instance.queue_free()
