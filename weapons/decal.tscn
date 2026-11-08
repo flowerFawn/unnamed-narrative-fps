@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://b8art13p6snog"]
+
+[ext_resource type="Texture2D" uid="uid://cum1m08rrsemk" path="res://assets/gunshot_decal.png" id="1_voaxj"]
+
+[node name="Decal" type="Decal" unique_id=26858741]
+size = Vector3(0.1, 0.1, 0.1)
+texture_albedo = ExtResource("1_voaxj")
+distance_fade_enabled = true

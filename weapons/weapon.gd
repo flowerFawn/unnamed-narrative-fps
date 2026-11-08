@@ -24,6 +24,7 @@ enum AutoMode {
 ##Timer that is used for the cooldown between shots
 var cooldown_timer:Timer
 
+
 ##If the weapon is currently on cooldown and cannot be used
 var on_cooldown:bool = false
 
@@ -31,6 +32,13 @@ var on_cooldown:bool = false
 func _ready() -> void:
 	cooldown_timer = create_cooldown_timer()
 	add_child(cooldown_timer)
+	setup()
+	
+	
+##subroutine to be overwritten in subclasses, called in ready, for any
+##specifically required setup
+func setup() -> void:
+	pass
 
 ##Checks if able to shoot, and if so, does shoot.
 ##After shooting calls _shot_end() to start the cooldown.
@@ -38,12 +46,20 @@ func _ready() -> void:
 func attempt_shoot() -> void:
 	if not on_cooldown:
 		_shoot()
+		_shot_visuals()
 		_shot_end()
 
 ##Subroutine that actually shoots. Can be overwritten in some weapon subclasses.
 ##Should not ever be called from outside of attempt_shoot()
 func _shoot() -> void:
 	pass
+	
+	
+##Subroutine that handles visuals for the weapon. Overwritten by subclasses
+func _shot_visuals() -> void:
+	pass
+
+
 
 ##Marks the cooldown flag as true to prevent more shooting, and starts the timer
 ##to undo this.

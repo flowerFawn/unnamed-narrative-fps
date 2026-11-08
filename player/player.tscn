@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://x3lektvp28jy" path="res://player/player.gd" id="1_oul6g"]
 [ext_resource type="PackedScene" uid="uid://0hpsvqsuisno" path="res://player/player_head.tscn" id="2_rkbax"]
+[ext_resource type="PackedScene" uid="uid://bxpcg6bobpvyo" path="res://ui/hud/hud.tscn" id="3_g1dw6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y8mhm"]
 height = 1.8
@@ -23,3 +24,5 @@ shape = SubResource("CapsuleShape3D_y8mhm")
 [node name="PlayerPlaceholderMesh" type="MeshInstance3D" parent="." unique_id=451573107]
 visible = false
 mesh = SubResource("CapsuleMesh_vmthy")
+
+[node name="HudLayer" parent="." unique_id=1006490498 instance=ExtResource("3_g1dw6")]
