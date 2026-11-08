@@ -60,6 +60,13 @@ func _shot_visuals() -> void:
 	pass
 
 
+##Creates a decal from the given packed scene at the given point in global space
+##may be overwritten in some subclasses for more complex decals
+func _decal_visual(point:Vector3, decal:PackedScene) -> void:
+	var new_decal:Decal = decal.instantiate()
+	get_tree().root.add_child(new_decal)
+	new_decal.global_position = point
+
 
 ##Marks the cooldown flag as true to prevent more shooting, and starts the timer
 ##to undo this.
