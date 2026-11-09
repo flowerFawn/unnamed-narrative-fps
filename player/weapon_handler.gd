@@ -9,8 +9,11 @@ var selected_weapon_index:int:
 	get:
 		return selected_weapon_index
 	set(value):
-		selected_weapon_index = 0
-		current_weapon = get_children()[selected_weapon_index]
+		selected_weapon_index = value
+		var all_weapons:Array[Weapon]
+		all_weapons.assign(get_children())
+		if selected_weapon_index < all_weapons.size():
+			current_weapon = get_children()[selected_weapon_index]
 ##Reference to the currently selected weapon
 var current_weapon:Weapon
 
@@ -31,3 +34,17 @@ func _physics_process(delta: float) -> void:
 ##not shoot
 func attempt_shoot() -> void:
 	current_weapon.attempt_shoot()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	var new_index:int
+	if event.is_pressed() and event.as_text().is_valid_int():
+		new_index = int(event.as_text())
+		print(new_index)
+		if new_index == 0:
+			new_index = 10
+		new_index -= 1
+		selected_weapon_index = new_index
+		print(selected_weapon_index)
+		print(current_weapon)
+		
