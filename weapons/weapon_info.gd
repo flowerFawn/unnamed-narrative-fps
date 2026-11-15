@@ -38,6 +38,9 @@ enum WeaponType {
 @export var minimum_comfortable_shooting_distance:float
 
 @export_group("Visuals")
+##Mesh to be used for the weapon. Created in blender, and single mesh isolated
+##via save-to-file in import
+@export var mesh:Mesh
 ##How long a visual effect created by this weapon will last eg.  bullet trails (seconds)
 @export var visual_effect_time:float
 ##What decal the weapon will create if needed (as a packed scene)

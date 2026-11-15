@@ -71,6 +71,8 @@ enum ModeChangeContext {
 @export var line_of_sight_raycast:RayCast3D
 ##Enemy head, controlling weapon use
 @export var head:EnemyHead
+##Mesh used to show the weapon the enemy is using
+@export var weapon_mesh:MeshInstance3D
 ##Reference to the weapon this enemy is using. Generated based on weapon type
 ##when the enemy is created
 var weapon:Weapon
@@ -130,6 +132,7 @@ func setup() -> void:
 	speed = enemy_type.speed
 	
 	weapon = enemy_type.weapon_type.create_instance()
+	weapon_mesh.mesh = weapon.weapon_info.mesh
 	desired_shooting_distance_squared = weapon.weapon_info.desired_shooting_distance ** 2
 	maximum_comfortable_distance_squared = weapon.weapon_info.maximum_comfortable_shooting_distance ** 2
 	minimum_comfortable_distance_squared = weapon.weapon_info.minimum_comfortable_shooting_distance ** 2

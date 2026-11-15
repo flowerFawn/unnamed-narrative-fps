@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="WeaponInfo" format=3 uid="uid://4jr44hepu3pe"]
 
 [ext_resource type="Script" uid="uid://spf2elj4s0kt" path="res://weapons/weapon_info.gd" id="1_i2rap"]
+[ext_resource type="ArrayMesh" uid="uid://cy72jf0vfi133" path="res://weapons/models/pistol.tres" id="1_r18ln"]
 [ext_resource type="Texture2D" uid="uid://cum1m08rrsemk" path="res://assets/gunshot_decal.png" id="2_d777n"]
 
 [sub_resource type="PackedScene" id="PackedScene_r18ln"]
@@ -28,6 +29,7 @@ auto_mode = 1
 desired_shooting_distance = 5.0
 maximum_comfortable_shooting_distance = 6.0
 minimum_comfortable_shooting_distance = 2.0
+mesh = ExtResource("1_r18ln")
 visual_effect_time = 0.4
 weapon_decal = SubResource("PackedScene_r18ln")
 weapon_type = 1

@@ -4,6 +4,8 @@ class_name PlayerWeaponHandler
 ##and keeping them as children to keep their position the same as the player's
 
 
+@export var weapon_mesh:MeshInstance3D
+
 ##The index of the selected weapon, in the list of children
 var selected_weapon_index:int:
 	get:
@@ -14,6 +16,7 @@ var selected_weapon_index:int:
 		all_weapons.assign(get_children())
 		if selected_weapon_index < all_weapons.size():
 			current_weapon = get_children()[selected_weapon_index]
+			weapon_mesh.mesh = current_weapon.weapon_info.mesh
 ##Reference to the currently selected weapon
 var current_weapon:Weapon
 

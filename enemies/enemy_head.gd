@@ -4,6 +4,7 @@ class_name EnemyHead
 ##Class for the head of an enemy. Used to hold the pitch and yaw of an enemy's
 ##look direction and handle the weapon
 
+
 ##look at a point, usually the player's position, in global space
 ##uses fun trig
 func look_towards(point:Vector3) -> void:

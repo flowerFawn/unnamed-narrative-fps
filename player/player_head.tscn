@@ -8,12 +8,14 @@
 [ext_resource type="Resource" uid="uid://d1a18glwpd3sp" path="res://weapons/resources/Auto Rifle.tres" id="4_gfdtn"]
 [ext_resource type="Resource" uid="uid://4jr44hepu3pe" path="res://weapons/resources/Pistol.tres" id="4_n6qio"]
 [ext_resource type="Resource" uid="uid://dfvb1oqrqcqxy" path="res://weapons/resources/Sniper.tres" id="6_bsssf"]
+[ext_resource type="ArrayMesh" uid="uid://cy72jf0vfi133" path="res://weapons/models/pistol.tres" id="9_bsssf"]
 
 [node name="PlayerHead" type="Node3D" unique_id=943587034]
 script = ExtResource("1_quj11")
 
-[node name="PlayerWeaponHandler" type="Node3D" parent="." unique_id=78326967]
+[node name="PlayerWeaponHandler" type="Node3D" parent="." unique_id=78326967 node_paths=PackedStringArray("weapon_mesh")]
 script = ExtResource("2_gfdtn")
+weapon_mesh = NodePath("../WeaponMesh")
 metadata/_custom_type_script = "uid://dbxqiemf2tbbs"
 
 [node name="Pistol" type="Node3D" parent="PlayerWeaponHandler" unique_id=2028381733]
@@ -37,3 +39,7 @@ weapon_info = ExtResource("4_5yk4i")
 metadata/_custom_type_script = "uid://bs40pe42iot7c"
 
 [node name="PlayerHeadCamera" type="Camera3D" parent="." unique_id=563557059]
+
+[node name="WeaponMesh" type="MeshInstance3D" parent="." unique_id=1775684637]
+transform = Transform3D(-0.9682304, 0, -0.25005975, 0, 1, 0, 0.25005975, 0, -0.9682304, 0.19586402, -0.09522346, -0.123045444)
+mesh = ExtResource("9_bsssf")
