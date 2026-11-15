@@ -89,12 +89,12 @@ var goal_strategy_point:StrategyPoint
 var goal_point:Vector3
 
 ##If the enemy has unbroken line of sight to the player
-var has_line_of_sight:bool
+var has_line_of_sight:bool = false
 ##Distance from the player, squared to save costs
 var distance_squared_to_player:float
 ##Global position of the player at the last frame the enemy had line of sight
 ##of the player
-var last_known_player_position:Vector3
+var last_known_player_position:Vector3 = Vector3.INF
 
 
 ##Desired shooting distance (from weapon.weapon_info) squared.
@@ -186,6 +186,8 @@ func idle_physics_process(delta:float) -> void:
 func update_pathfinding() -> void:
 	match mode:
 		EnemyMode.SIMPLE_POSITIONING:
+			if not has_line_of_sight:
+				return
 			if desired_shooting_distance_squared < distance_squared_to_player:
 				goal_point = level.player.global_position
 			elif distance_squared_to_player < minimum_comfortable_distance_squared:
@@ -254,7 +256,11 @@ func gather_info() -> void:
 ##updates the line of sight raycast and if the enemy has line of sight
 func update_line_of_sight() -> void:
 	line_of_sight_raycast.target_position = level.player.global_position - global_position
-	has_line_of_sight = not line_of_sight_raycast.is_colliding()
+	if distance_squared_to_player < enemy_type.sight_distance ** 2:
+		line_of_sight_raycast.force_raycast_update()
+		has_line_of_sight = not line_of_sight_raycast.is_colliding()
+	else:
+		has_line_of_sight = false
 	
 ##updates the distance squared
 func update_player_distance() -> void:
@@ -382,7 +388,8 @@ func mode_change_trigger_hp_dropped() -> void:
 #endregion
 
 func do_shooting() -> void:
-	weapon.attempt_shoot()
+	if has_line_of_sight:
+		weapon.attempt_shoot()
 
 func hit(damage:float) -> void:
 	current_hp -= damage
