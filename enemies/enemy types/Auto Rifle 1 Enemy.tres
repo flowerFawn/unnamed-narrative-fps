@@ -6,5 +6,6 @@
 [resource]
 script = ExtResource("1_y12pc")
 weapon_type = ExtResource("2_8q1ri")
-strategy_use = 1
+strategy_use = 3
+retreat_hp = 30.0
 metadata/_custom_type_script = "uid://d2rqnjgk20ffv"

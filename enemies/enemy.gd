@@ -1,10 +1,9 @@
 extends Actor
 class_name Enemy
 
-const SPEED:float = 1.5
+var speed:float = 1.5
+var current_hp:float
 
-var max_hp:float = 100
-var hp:float = max_hp
 
 
 ##What the enemy has as its current goal
@@ -39,6 +38,14 @@ enum StrategyUse {
 enum StrategyBehaviour {
 	AMBUSH,
 	CHASE,
+}
+
+enum ModeChangeContext {
+	NA,
+	START, #search for any strategy point
+	REPOSITION, #search for nearby shooting point in line of sight
+	RETREAT, #search for a strategy point out of line of sight
+	FLEE, #search for cover out of line of sight
 }
 
 ##Enemy type of this enemy
@@ -119,6 +126,9 @@ func _ready() -> void:
 	setup()
 	
 func setup() -> void:
+	current_hp = enemy_type.max_hp
+	speed = enemy_type.speed
+	
 	weapon = enemy_type.weapon_type.create_instance()
 	desired_shooting_distance_squared = weapon.weapon_info.desired_shooting_distance ** 2
 	maximum_comfortable_distance_squared = weapon.weapon_info.maximum_comfortable_shooting_distance ** 2
@@ -158,7 +168,7 @@ func _physics_process(delta: float) -> void:
 	
 func moving_physics_process(delta:float) -> void:
 	velocity = global_position.direction_to(pathfinding_agent.get_next_path_position())
-	velocity *= SPEED
+	velocity *= speed
 	if not is_on_floor():
 		velocity.y = -level.GRAVITY
 
@@ -260,7 +270,7 @@ func set_state(new_state:EnemyState) -> void:
 	state = new_state
 	
 ##sets the state, as well as other variables that should be changed depending on the state
-func set_mode(new_mode:EnemyMode) -> void:
+func set_mode(new_mode:EnemyMode, context:ModeChangeContext = ModeChangeContext.NA) -> void:
 	if mode == EnemyMode.STRATEGIC_POSITIONING or mode == EnemyMode.STRATEGIC_SHOOTING: #before change
 		goal_strategy_point.leave()
 	mode = new_mode
@@ -279,8 +289,19 @@ func set_mode(new_mode:EnemyMode) -> void:
 		EnemyMode.STRATEGIC_POSITIONING:
 			is_pathfinding = true
 			is_shooting = false
-			goal_strategy_point = strategy_points.get_closest_point(global_position)
-			goal_strategy_point.occupied = true
+			match context:
+				ModeChangeContext.NA, ModeChangeContext.START:
+					goal_strategy_point = strategy_points.get_closest_point(global_position)
+				ModeChangeContext.REPOSITION:
+					goal_strategy_point = strategy_points.get_closest_point_parameters(
+						last_known_player_position, StrategyPoint.StrategyType.SHOOTING_POINT, StrategyPointGroup.LineOfSightMode.REQUIRED)
+				ModeChangeContext.RETREAT:
+					goal_strategy_point = strategy_points.get_closest_point_parameters(
+						global_position, StrategyPoint.StrategyType.ANY, StrategyPointGroup.LineOfSightMode.REQUIRED_NOT)
+				ModeChangeContext.FLEE:
+					goal_strategy_point = strategy_points.get_closest_point_parameters(
+						global_position, StrategyPoint.StrategyType.COVER, StrategyPointGroup.LineOfSightMode.REQUIRED_NOT)
+			goal_strategy_point.occupy()
 		EnemyMode.STRATEGIC_SHOOTING:
 			is_pathfinding = false
 			is_shooting = true
@@ -292,7 +313,7 @@ func mode_change_trigger_player_moves_too_close() -> void:
 		StrategyUse.NONE, StrategyUse.START:
 			set_mode(EnemyMode.SIMPLE_POSITIONING)
 		StrategyUse.FALLBACK, StrategyUse.BOTH:
-			set_mode(EnemyMode.STRATEGIC_POSITIONING)
+			set_mode(EnemyMode.STRATEGIC_POSITIONING, ModeChangeContext.RETREAT)
 			
 			
 func mode_change_trigger_player_leaves_range() -> void:
@@ -303,23 +324,27 @@ func mode_change_trigger_player_leaves_range() -> void:
 					set_mode(EnemyMode.SIMPLE_SEARCHING)
 				EnemyMode.STRATEGIC_SHOOTING:
 					if enemy_type.enemy_behaviour == StrategyBehaviour.CHASE:
-						set_mode(EnemyMode.STRATEGIC_POSITIONING)
+						set_mode(EnemyMode.STRATEGIC_POSITIONING, ModeChangeContext.REPOSITION)
 		StrategyUse.BOTH, StrategyUse.FULL:
 			match mode:
 				EnemyMode.SIMPLE_SHOOTING:
 					set_mode(EnemyMode.SIMPLE_SEARCHING)
 				EnemyMode.STRATEGIC_SHOOTING:
 					if enemy_type.enemy_behaviour == StrategyBehaviour.CHASE:
-						set_mode(EnemyMode.STRATEGIC_POSITIONING)
+						set_mode(EnemyMode.STRATEGIC_POSITIONING, ModeChangeContext.REPOSITION)
 			
 			
 func mode_change_trigger_desired_distance() -> void:
 	match enemy_type.strategy_use:
 		StrategyUse.NONE, StrategyUse.START, StrategyUse.BOTH:
 			set_mode(EnemyMode.SIMPLE_SHOOTING)
+		_:
+			return
 			
 			
 func mode_change_trigger_lost_player() -> void:
+	if not last_known_player_position.is_finite(): #only trigger when already seen player
+		return
 	match enemy_type.strategy_use:
 		StrategyUse.NONE, StrategyUse.START:
 			match mode:
@@ -336,14 +361,23 @@ func mode_change_trigger_found_player() -> void:
 		StrategyUse.NONE, StrategyUse.START, StrategyUse.BOTH:
 			set_mode(EnemyMode.SIMPLE_POSITIONING)
 		StrategyUse.FALLBACK, StrategyUse.FULL:
-			set_mode(EnemyMode.STRATEGIC_POSITIONING)
+			set_mode(EnemyMode.STRATEGIC_POSITIONING, ModeChangeContext.REPOSITION)
 		
 
 func mode_change_trigger_target_reached() -> void:
-	match  enemy_type.strategy_use:
+	match enemy_type.strategy_use:
 		StrategyUse.START, StrategyUse.FALLBACK, StrategyUse.BOTH, StrategyUse.FULL:
 			if mode == EnemyMode.STRATEGIC_POSITIONING:
 				set_mode(EnemyMode.STRATEGIC_SHOOTING)
+				
+				
+func mode_change_trigger_hp_dropped() -> void:
+	print("yup")
+	match enemy_type.strategy_use:
+		StrategyUse.FALLBACK, StrategyUse.BOTH, StrategyUse.FULL:
+			set_mode(EnemyMode.STRATEGIC_POSITIONING, ModeChangeContext.FLEE)
+		_:
+			return
 
 #endregion
 
@@ -351,8 +385,10 @@ func do_shooting() -> void:
 	weapon.attempt_shoot()
 
 func hit(damage:float) -> void:
-	hp -= damage
-	if hp < 0:
+	current_hp -= damage
+	if current_hp < enemy_type.retreat_hp:
+		mode_change_trigger_hp_dropped()
+	if current_hp < 0:
 		die()
 		
 		

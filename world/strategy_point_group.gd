@@ -41,7 +41,7 @@ func get_closest_point(from:Vector3, wanted_unoccupied:bool = true) -> StrategyP
 			lowest_distance_squared = current_distance_squared
 			closest_point = point
 	if not valid_point_found:
-		return null
+		return get_children()[0]
 	else:
 		return closest_point
 		
@@ -72,7 +72,7 @@ func get_closest_point_parameters(from:Vector3,
 			lowest_distance_squared = current_distance_squared
 			closest_point = point
 	if not valid_point_found:
-		return null
+		return get_closest_point(from, false) #if one cannot be found, try to find one outside the parameters
 	else:
 		return closest_point
 		

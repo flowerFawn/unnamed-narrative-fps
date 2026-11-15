@@ -5,9 +5,9 @@ class_name Player
 ##Depending on the state runs a different process, and then calls move_and_slide().
 ##Contains a PlayerHead that controls the camera and shooting.
 
-const BASE_SPEED:int = 1
+const BASE_SPEED:int = 10
 const SPRINT_MULTIPLIER:float = 2
-const JUMP_VERTICAL_FORCE:float = 2.5
+const JUMP_VERTICAL_FORCE:float = 25
 const JUMP_HORIZONTAL_MULTIPLIER:float = 2
 
 enum PlayerState{

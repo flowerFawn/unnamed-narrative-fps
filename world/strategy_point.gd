@@ -3,8 +3,7 @@ class_name StrategyPoint
 
 enum StrategyType {
 	ANY,
-	FULL_COVER,
-	SHOOTING_COVER,
+	COVER,
 	SHOOTING_POINT,
 }
 
