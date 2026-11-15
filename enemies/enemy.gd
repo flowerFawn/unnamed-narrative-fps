@@ -378,7 +378,6 @@ func mode_change_trigger_target_reached() -> void:
 				
 				
 func mode_change_trigger_hp_dropped() -> void:
-	print("yup")
 	match enemy_type.strategy_use:
 		StrategyUse.FALLBACK, StrategyUse.BOTH, StrategyUse.FULL:
 			set_mode(EnemyMode.STRATEGIC_POSITIONING, ModeChangeContext.FLEE)
