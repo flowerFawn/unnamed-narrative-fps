@@ -25,7 +25,7 @@ func _shoot() -> void:
 		attempt_hit(target)
 		if not target.is_in_group(&"hitable"):
 			_decal_visual(ray.get_collision_point(), weapon_info.weapon_decal)
-	#ray.queue_free()
+	ray.queue_free()
 
 func _shot_visuals() -> void:
 	var trail_instance:MeshInstance3D = MeshInstance3D.new()
