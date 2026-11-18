@@ -280,7 +280,7 @@ func set_state(new_state:EnemyState) -> void:
 	
 ##sets the state, as well as other variables that should be changed depending on the state
 func set_mode(new_mode:EnemyMode, context:ModeChangeContext = ModeChangeContext.NA) -> void:
-	if mode == EnemyMode.STRATEGIC_POSITIONING or mode == EnemyMode.STRATEGIC_SHOOTING: #before change
+	if (mode == EnemyMode.STRATEGIC_POSITIONING and new_mode != EnemyMode.STRATEGIC_SHOOTING) or mode == EnemyMode.STRATEGIC_SHOOTING: #before change
 		goal_strategy_point.leave()
 	mode = new_mode
 	match new_mode:
