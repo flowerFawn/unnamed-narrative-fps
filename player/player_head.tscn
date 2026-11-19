@@ -7,8 +7,8 @@
 [ext_resource type="Resource" uid="uid://hivwbexs808b" path="res://weapons/resources/Wrench.tres" id="4_5yk4i"]
 [ext_resource type="Resource" uid="uid://d1a18glwpd3sp" path="res://weapons/resources/Auto Rifle.tres" id="4_gfdtn"]
 [ext_resource type="Resource" uid="uid://4jr44hepu3pe" path="res://weapons/resources/Pistol.tres" id="4_n6qio"]
-[ext_resource type="Resource" uid="uid://dfvb1oqrqcqxy" path="res://weapons/resources/Sniper.tres" id="6_bsssf"]
-[ext_resource type="ArrayMesh" uid="uid://cy72jf0vfi133" path="res://weapons/models/pistol.tres" id="9_bsssf"]
+[ext_resource type="Resource" uid="uid://dfvb1oqrqcqxy" path="res://weapons/resources/Player Sniper.tres" id="6_bsssf"]
+[ext_resource type="ArrayMesh" uid="uid://cytrnjk1jke5s" path="res://weapons/models/pistol.tres" id="9_bsssf"]
 
 [node name="PlayerHead" type="Node3D" unique_id=943587034]
 script = ExtResource("1_quj11")

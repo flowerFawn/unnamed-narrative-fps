@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="WeaponInfo" format=3 uid="uid://4jr44hepu3pe"]
 
 [ext_resource type="Script" uid="uid://spf2elj4s0kt" path="res://weapons/weapon_info.gd" id="1_i2rap"]
-[ext_resource type="ArrayMesh" uid="uid://cy72jf0vfi133" path="res://weapons/models/pistol.tres" id="1_r18ln"]
+[ext_resource type="ArrayMesh" uid="uid://cytrnjk1jke5s" path="res://weapons/models/pistol.tres" id="1_r18ln"]
 [ext_resource type="Texture2D" uid="uid://cum1m08rrsemk" path="res://assets/gunshot_decal.png" id="2_d777n"]
 
 [sub_resource type="PackedScene" id="PackedScene_r18ln"]

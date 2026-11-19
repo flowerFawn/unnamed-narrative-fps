@@ -11,6 +11,7 @@ const SENSITIVITY:float = 0.001
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	pass
 	
 ##When a mouse motion is recieved, look around
 func _unhandled_input(event: InputEvent) -> void:

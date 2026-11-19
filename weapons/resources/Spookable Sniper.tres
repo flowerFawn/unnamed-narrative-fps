@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="WeaponInfo" format=3 uid="uid://dkag0qlbttn4u"]
+
+[ext_resource type="ArrayMesh" uid="uid://dsm3km6f0upow" path="res://weapons/models/sniper.tres" id="1_re7e2"]
+[ext_resource type="Script" uid="uid://spf2elj4s0kt" path="res://weapons/weapon_info.gd" id="2_muvh7"]
+[ext_resource type="PackedScene" uid="uid://b8art13p6snog" path="res://weapons/decal.tscn" id="3_v11aa"]
+
+[resource]
+script = ExtResource("2_muvh7")
+name = "Sniper"
+damage = 150
+cooldown = 8.0
+range = 80.0
+desired_shooting_distance = 5.0
+maximum_comfortable_shooting_distance = 80.0
+minimum_comfortable_shooting_distance = 5.0
+mesh = ExtResource("1_re7e2")
+visual_effect_time = 2.5
+weapon_decal = ExtResource("3_v11aa")
+weapon_type = 1
+metadata/_custom_type_script = "uid://spf2elj4s0kt"

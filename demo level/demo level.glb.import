@@ -41,11 +41,8 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "nodes": {
-"PATH:floor": {
+"PATH:Plane": {
 "generate/physics": true
-},
-"PATH:navmesh": {
-"generate/navmesh": 2
 }
 }
 }
