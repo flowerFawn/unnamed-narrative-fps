@@ -6,8 +6,13 @@ class_name EnemyType
 @export var max_hp:int = 100
 ##Speed at which the enemy moves
 @export var speed:float = 1.5
+##Time the enemy will wait between shots. Only matters if greater than
+##weapon cooldown. Makes little sense when using an automatic weapon.
+##Mostly so pistol can have no cooldown
+@export var shot_cooldown:float = 0
 ##Time after seeing the player to gain line of sight
 @export var time_to_notice:float = 0.2
+
 
 
 

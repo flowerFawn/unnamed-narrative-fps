@@ -23,7 +23,6 @@ _bundled = {
 script = ExtResource("1_i2rap")
 name = "Pistol"
 damage = 10
-cooldown = 0.3
 range = 6.0
 auto_mode = 1
 desired_shooting_distance = 5.0

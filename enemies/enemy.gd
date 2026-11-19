@@ -75,6 +75,8 @@ enum ModeChangeContext {
 @export var weapon_mesh:MeshInstance3D
 ##Timer that is used for non-instant line of sight
 @export var time_to_to_notice_timer:Timer
+##Timer that is used for shot cooldowns of the enemy itself
+@export var shot_cooldown_timer:Timer
 
 ##Reference to the weapon this enemy is using. Generated based on weapon type
 ##when the enemy is created
@@ -126,6 +128,8 @@ var is_pathfinding:bool
 ##If the enemy is currently trying to shoot at/attack the player from their
 ##current position
 var is_shooting:bool
+##If the enemy is currently unable to shoot due to it's own cooldown
+var is_on_shot_cooldown:bool = false
 
 func _ready() -> void:
 	setup()
@@ -134,6 +138,8 @@ func setup() -> void:
 	current_hp = enemy_type.max_hp
 	speed = enemy_type.speed
 	time_to_to_notice_timer.wait_time = enemy_type.time_to_notice
+	if enemy_type.shot_cooldown > 0:
+		shot_cooldown_timer.wait_time = enemy_type.shot_cooldown
 	
 	weapon = enemy_type.weapon_type.create_instance()
 	weapon_mesh.mesh = weapon.weapon_info.mesh
@@ -409,8 +415,15 @@ func mode_change_trigger_hp_dropped() -> void:
 #endregion
 
 func do_shooting() -> void:
-	if has_line_of_sight:
-		weapon.attempt_shoot()
+	if has_line_of_sight and not is_on_shot_cooldown:
+		if weapon.attempt_shoot():
+			shot_cooldown_timer.start()
+			is_on_shot_cooldown = true
+		
+		
+func shooting_cooldown_finished() -> void:
+	is_on_shot_cooldown = false
+
 
 func hit(damage:float) -> void:
 	current_hp -= damage

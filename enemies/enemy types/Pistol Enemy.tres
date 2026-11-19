@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_a8yky")
+shot_cooldown = 0.3
 weapon_type = ExtResource("2_sd5wk")
 strategy_use = 1
 retreat_hp = 20.0

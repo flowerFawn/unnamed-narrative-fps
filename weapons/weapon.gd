@@ -30,8 +30,9 @@ var on_cooldown:bool = false
 
 
 func _ready() -> void:
-	cooldown_timer = create_cooldown_timer()
-	add_child(cooldown_timer)
+	if weapon_info.cooldown > 0:
+		cooldown_timer = create_cooldown_timer()
+		add_child(cooldown_timer)
 	setup()
 	
 	
@@ -49,11 +50,14 @@ func cleanup() -> void:
 ##Checks if able to shoot, and if so, does shoot.
 ##After shooting calls _shot_end() to start the cooldown.
 ##This is what should always be called by outside actors.
-func attempt_shoot() -> void:
+func attempt_shoot() -> bool:
 	if not on_cooldown:
 		_shoot()
 		_shot_visuals()
 		_shot_end()
+		return true
+	else:
+		return false
 
 ##Subroutine that actually shoots. Can be overwritten in some weapon subclasses.
 ##Should not ever be called from outside of attempt_shoot()
@@ -77,8 +81,9 @@ func _decal_visual(point:Vector3, decal:PackedScene) -> void:
 ##Marks the cooldown flag as true to prevent more shooting, and starts the timer
 ##to undo this.
 func _shot_end() -> void:
-	on_cooldown = true
-	cooldown_timer.start()
+	if weapon_info.cooldown > 0:
+		on_cooldown = true
+		cooldown_timer.start()
 
 ##Marks the cooldown flag as false to allow new shooting. Called by cooldown
 ##timer when it finishes.
