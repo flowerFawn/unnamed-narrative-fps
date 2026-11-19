@@ -9,6 +9,7 @@ name = "Wrench"
 damage = 15
 cooldown = 1.0
 range = 0.3
+uses_ammo = false
 maximum_comfortable_shooting_distance = 0.2
 weapon_decal = ExtResource("2_daqhq")
 metadata/_custom_type_script = "uid://spf2elj4s0kt"

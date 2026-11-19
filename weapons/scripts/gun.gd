@@ -13,6 +13,8 @@ func setup() -> void:
 	trail_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	trail_material.albedo_color = Color(1, 1, 1, 0.5)
 	bullet_trail_mesh.material = trail_material
+	
+	super()
 
 func _shoot() -> void:
 	var ray:RayCast3D = RayCast3D.new()

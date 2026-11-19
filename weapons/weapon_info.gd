@@ -18,6 +18,12 @@ enum WeaponType {
 @export var cooldown:float
 ##Distance the weapon can cover, generally the length of a ray (in metres)
 @export var range:float
+##If the weapon uses ammo
+@export var uses_ammo:bool = true
+##Maximum amount of ammo in the "chamber" if the weapon uses ammo
+@export var mag_size:int = 30
+##Time to reload the weapon (in seconds)
+@export var reload_time:float = 1
 ##Type of automatic shooting
 ##Manual:Currently same as semi
 ##Semi:Shoots once each time the trigger is pulled/mouse clicked

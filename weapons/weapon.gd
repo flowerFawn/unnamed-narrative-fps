@@ -23,23 +23,34 @@ enum AutoMode {
 
 ##Timer that is used for the cooldown between shots
 var cooldown_timer:Timer
-
+##Timer that is used for reloading
+var reload_timer:Timer
 
 ##If the weapon is currently on cooldown and cannot be used
 var on_cooldown:bool = false
+##
+var current_ammo:int
 
 
 func _ready() -> void:
 	if weapon_info.cooldown > 0:
-		cooldown_timer = create_cooldown_timer()
+		cooldown_timer = create_timer(weapon_info.cooldown, end_cooldown)
 		add_child(cooldown_timer)
+	if weapon_info.uses_ammo:
+		reload_timer = create_timer(weapon_info.reload_time, _reload_finished)
+		add_child(reload_timer)
 	setup()
 	
 	
 ##subroutine to be overwritten in subclasses, called in ready, for any
-##specifically required setup
+##specifically required setup. Call super() for the basic parts at the
+##end of any overwritten setup though
 func setup() -> void:
-	pass
+	if weapon_info.uses_ammo:
+		current_ammo = weapon_info.mag_size
+	else:
+		current_ammo = 1 
+		#keep ammo always above 0 and never change it if not using ammo
 	
 	
 ##subroutine to be overwritten in subclasses, anything that should be done
@@ -51,7 +62,7 @@ func cleanup() -> void:
 ##After shooting calls _shot_end() to start the cooldown.
 ##This is what should always be called by outside actors.
 func attempt_shoot() -> bool:
-	if not on_cooldown:
+	if not on_cooldown and current_ammo > 0:
 		_shoot()
 		_shot_visuals()
 		_shot_end()
@@ -68,7 +79,23 @@ func _shoot() -> void:
 ##Subroutine that handles visuals for the weapon. Overwritten by subclasses
 func _shot_visuals() -> void:
 	pass
+	
 
+##If the weapon can start to be reloaded, starts the reload timer
+func attempt_reload() -> void:
+	if not weapon_info.uses_ammo:
+		return
+	#if not already reloading, and mag not full
+	if reload_timer.is_stopped() and current_ammo != weapon_info.mag_size:
+		_start_reload()
+		
+		
+func _start_reload() -> void:
+	current_ammo = 0
+	reload_timer.start()
+
+func _reload_finished() -> void:
+	current_ammo = weapon_info.mag_size
 
 ##Creates a decal from the given packed scene at the given point in global space
 ##may be overwritten in some subclasses for more complex decals
@@ -81,6 +108,8 @@ func _decal_visual(point:Vector3, decal:PackedScene) -> void:
 ##Marks the cooldown flag as true to prevent more shooting, and starts the timer
 ##to undo this.
 func _shot_end() -> void:
+	if weapon_info.uses_ammo:
+		current_ammo -= 1
 	if weapon_info.cooldown > 0:
 		on_cooldown = true
 		cooldown_timer.start()
@@ -95,10 +124,13 @@ func attempt_hit(target:PhysicsBody3D) -> void:
 		if target.has_method(&"hit"):
 			target.hit(weapon_info.damage)
 
-##Creates and returns a cooldown timer with required values, and connects
-func create_cooldown_timer() -> Timer:
+##Creates and returns a timer with required values, and connects to given function
+func create_timer(given_wait:float, timeout_function:Callable) -> Timer:
 	var new_timer:Timer = Timer.new()
 	new_timer.one_shot = true
-	new_timer.wait_time = weapon_info.cooldown
-	new_timer.timeout.connect(end_cooldown)
+	new_timer.wait_time = given_wait
+	new_timer.timeout.connect(timeout_function)
 	return new_timer
+
+	
+	

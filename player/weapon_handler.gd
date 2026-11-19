@@ -32,11 +32,16 @@ func _physics_process(delta: float) -> void:
 		#attempt shoot if just pressed and semi auto
 		elif Input.is_action_just_pressed("Shoot"):
 			attempt_shoot()
+	if Input.is_action_just_pressed("Reload"):
+		attempt_reload()
 
 ##Calls to attempt a shot in the weapon. If the weapon is on cooldown, this will
 ##not shoot
 func attempt_shoot() -> void:
 	current_weapon.attempt_shoot()
+	
+func attempt_reload() -> void:
+	current_weapon.attempt_reload()
 
 
 func _unhandled_input(event: InputEvent) -> void:

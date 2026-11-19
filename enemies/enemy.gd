@@ -336,7 +336,7 @@ func set_mode(new_mode:EnemyMode, context:ModeChangeContext = ModeChangeContext.
 			
 			
 func mode_change_trigger_player_moves_too_close() -> void:
-	print("player too close mode change")
+	#print("player too close mode change")
 	match enemy_type.strategy_use:
 		StrategyUse.NONE, StrategyUse.START:
 			set_mode(EnemyMode.SIMPLE_POSITIONING)
@@ -345,7 +345,7 @@ func mode_change_trigger_player_moves_too_close() -> void:
 			
 			
 func mode_change_trigger_player_leaves_range() -> void:
-	print("player too far mode change")
+	#print("player too far mode change")
 	match  enemy_type.strategy_use:
 		StrategyUse.NONE, StrategyUse.START, StrategyUse.FALLBACK:
 			match mode:
@@ -364,7 +364,7 @@ func mode_change_trigger_player_leaves_range() -> void:
 			
 			
 func mode_change_trigger_desired_distance() -> void:
-	print("player desired distance mode change")
+	#print("player desired distance mode change")
 	match enemy_type.strategy_use:
 		StrategyUse.NONE, StrategyUse.START, StrategyUse.BOTH:
 			set_mode(EnemyMode.SIMPLE_SHOOTING)
@@ -388,7 +388,7 @@ func mode_change_trigger_lost_player() -> void:
 		
 		
 func mode_change_trigger_found_player() -> void:
-	print("player found mode change")
+	#print("player found mode change")
 	match enemy_type.strategy_use:
 		StrategyUse.NONE, StrategyUse.START, StrategyUse.BOTH:
 			set_mode(EnemyMode.SIMPLE_POSITIONING)
@@ -397,7 +397,7 @@ func mode_change_trigger_found_player() -> void:
 		
 
 func mode_change_trigger_target_reached() -> void:
-	print("reached target mode change")
+	#print("reached target mode change")
 	match enemy_type.strategy_use:
 		StrategyUse.START, StrategyUse.FALLBACK, StrategyUse.BOTH, StrategyUse.FULL:
 			if mode == EnemyMode.STRATEGIC_POSITIONING:
@@ -405,7 +405,7 @@ func mode_change_trigger_target_reached() -> void:
 				
 				
 func mode_change_trigger_hp_dropped() -> void:
-	print("hp drop mode change")
+	#print("hp drop mode change")
 	match enemy_type.strategy_use:
 		StrategyUse.FALLBACK, StrategyUse.BOTH, StrategyUse.FULL:
 			set_mode(EnemyMode.STRATEGIC_POSITIONING, ModeChangeContext.FLEE)
@@ -414,7 +414,11 @@ func mode_change_trigger_hp_dropped() -> void:
 
 #endregion
 
+##If out of ammo, reload.
+##Otherwise shoot if possible, and start enemy's own shot timer
 func do_shooting() -> void:
+	if weapon.current_ammo == 0:
+		weapon.attempt_reload()
 	if has_line_of_sight and not is_on_shot_cooldown:
 		if weapon.attempt_shoot():
 			shot_cooldown_timer.start()
