@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_1g5rt")
 speed = 0.5
+time_to_notice = 2.0
 weapon_type = ExtResource("2_1g5rt")
 strategy_use = 1
 sight_distance = 75.0

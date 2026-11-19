@@ -73,6 +73,9 @@ enum ModeChangeContext {
 @export var head:EnemyHead
 ##Mesh used to show the weapon the enemy is using
 @export var weapon_mesh:MeshInstance3D
+##Timer that is used for non-instant line of sight
+@export var time_to_to_notice_timer:Timer
+
 ##Reference to the weapon this enemy is using. Generated based on weapon type
 ##when the enemy is created
 var weapon:Weapon
@@ -130,6 +133,7 @@ func _ready() -> void:
 func setup() -> void:
 	current_hp = enemy_type.max_hp
 	speed = enemy_type.speed
+	time_to_to_notice_timer.wait_time = enemy_type.time_to_notice
 	
 	weapon = enemy_type.weapon_type.create_instance()
 	weapon_mesh.mesh = weapon.weapon_info.mesh
@@ -255,14 +259,23 @@ func gather_info() -> void:
 	update_player_distance()
 	update_known_player_position()
 	
-##updates the line of sight raycast and if the enemy has line of sight
+##updates the line of sight raycast and if the enemy has line of sight.
+##Only actually starts the time to notice timer
 func update_line_of_sight() -> void:
 	line_of_sight_raycast.target_position = level.player.global_position - global_position
 	if distance_squared_to_player < enemy_type.sight_distance ** 2:
-		line_of_sight_raycast.force_raycast_update()
-		has_line_of_sight = not line_of_sight_raycast.is_colliding()
+		if line_of_sight_raycast.is_colliding():
+			time_to_to_notice_timer.stop()
+			has_line_of_sight = false
+		elif time_to_to_notice_timer.is_stopped():
+			time_to_to_notice_timer.start()
 	else:
 		has_line_of_sight = false
+		
+		
+func time_to_notice_finished() -> void:
+	if not line_of_sight_raycast.is_colliding():
+		has_line_of_sight = true
 	
 ##updates the distance squared
 func update_player_distance() -> void:

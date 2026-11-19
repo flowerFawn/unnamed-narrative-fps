@@ -14,13 +14,14 @@ albedo_color = Color(1, 0, 0, 1)
 material = SubResource("StandardMaterial3D_y8mhm")
 height = 1.8
 
-[node name="Enemy" type="CharacterBody3D" unique_id=680560556 node_paths=PackedStringArray("pathfinding_agent", "airtime_raycast", "line_of_sight_raycast", "head", "weapon_mesh") groups=["hitable"]]
+[node name="Enemy" type="CharacterBody3D" unique_id=680560556 node_paths=PackedStringArray("pathfinding_agent", "airtime_raycast", "line_of_sight_raycast", "head", "weapon_mesh", "time_to_to_notice_timer") groups=["hitable"]]
 script = ExtResource("1_fw1ev")
 pathfinding_agent = NodePath("NavigationAgent3D")
 airtime_raycast = NodePath("AirtimeRaycast")
 line_of_sight_raycast = NodePath("LOSRaycast")
 head = NodePath("EnemyHead")
 weapon_mesh = NodePath("EnemyHead/WeaponMesh")
+time_to_to_notice_timer = NodePath("TimeToNoticeTimer")
 
 [node name="EnemyHead" type="Node3D" parent="." unique_id=1261952633]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
@@ -54,5 +55,9 @@ billboard = 1
 wait_time = 0.2
 autostart = true
 
+[node name="TimeToNoticeTimer" type="Timer" parent="." unique_id=972698204]
+one_shot = true
+
 [connection signal="navigation_finished" from="NavigationAgent3D" to="." method="mode_change_trigger_target_reached"]
 [connection signal="timeout" from="PathfindingUpdateTimer" to="." method="update_pathfinding"]
+[connection signal="timeout" from="TimeToNoticeTimer" to="." method="time_to_notice_finished"]

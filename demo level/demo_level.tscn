@@ -126,7 +126,7 @@ level = NodePath("..")
 metadata/_custom_type_script = "uid://cfbv5j06c4l4j"
 
 [node name="StrategyPoint" type="Marker3D" parent="StrategyPointGroup2" unique_id=841021772]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.344114, -3.1671066, -6.260071)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.211768, -3.1671066, -6.260071)
 script = ExtResource("3_kahmw")
 type = 2
 metadata/_custom_type_script = "uid://cybksx0q1t5jg"
@@ -249,7 +249,7 @@ level = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0700684, 18.347961, 35.05542)
 
 [node name="Enemy" parent="EnemyGroup2" unique_id=680560556 node_paths=PackedStringArray("strategy_points", "level") instance=ExtResource("3_nxb1t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.126465, -1.5176392, -1.7332306)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2988205, -1.5176392, -1.7332306)
 enemy_type = ExtResource("7_y2c0c")
 strategy_points = NodePath("../../StrategyPointGroup2")
 level = NodePath("../..")

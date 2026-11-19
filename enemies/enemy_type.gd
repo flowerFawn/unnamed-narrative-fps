@@ -6,7 +6,8 @@ class_name EnemyType
 @export var max_hp:int = 100
 ##Speed at which the enemy moves
 @export var speed:float = 1.5
-
+##Time after seeing the player to gain line of sight
+@export var time_to_notice:float = 0.2
 
 
 
