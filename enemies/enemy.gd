@@ -154,7 +154,6 @@ func _physics_process(delta: float) -> void:
 	gather_info()
 	check_for_mode_change_triggers()
 	check_for_state_change()
-	update_pathfinding()
 	head.look_towards(last_known_player_position)
 	if is_shooting:
 		do_shooting()
@@ -183,7 +182,7 @@ func shooting_physics_process(delta:float) -> void:
 func idle_physics_process(delta:float) -> void:
 	velocity = Vector3.ZERO
 	
-	#TODO: make this happen less regularly to save needless cpu cycles
+	
 	##Updates the goal point and sets that as the target position for the pathfinding agent
 	##new goal point is dependent on mode and other factors
 func update_pathfinding() -> void:

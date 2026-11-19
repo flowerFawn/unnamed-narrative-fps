@@ -50,4 +50,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1883502, 0)
 billboard = 1
 
+[node name="PathfindingUpdateTimer" type="Timer" parent="." unique_id=1216328307]
+wait_time = 0.2
+autostart = true
+
 [connection signal="navigation_finished" from="NavigationAgent3D" to="." method="mode_change_trigger_target_reached"]
+[connection signal="timeout" from="PathfindingUpdateTimer" to="." method="update_pathfinding"]
