@@ -5,9 +5,10 @@
 
 [resource]
 script = ExtResource("1_pmeag")
+max_hp = 40
 player_location_update_rate = 0.25
 weapon_type = ExtResource("2_egdph")
 strategy_use = 3
 enemy_behaviour = 1
-retreat_hp = 30.0
+retreat_hp = 10.0
 metadata/_custom_type_script = "uid://d2rqnjgk20ffv"

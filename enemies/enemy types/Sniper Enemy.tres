@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_a1yf8")
+max_hp = 10
 weapon_type = ExtResource("2_ysye2")
 strategy_use = 4
 sight_distance = 75.0

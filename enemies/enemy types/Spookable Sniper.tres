@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_1g5rt")
+max_hp = 10
 speed = 0.5
 time_to_notice = 2.0
 weapon_type = ExtResource("2_1g5rt")

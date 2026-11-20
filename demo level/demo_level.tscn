@@ -203,32 +203,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 148.28516, 1.5735426, 68.6907
 [node name="EnemyGroup1" type="Node3D" parent="." unique_id=238687854]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 85.78954, -1.6020508, 49.407124)
 
-[node name="Enemy3" parent="EnemyGroup1" unique_id=728449877 node_paths=PackedStringArray("strategy_points", "level") instance=ExtResource("3_nxb1t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.082584, 2.8572626, 5.029007)
-enemy_type = ExtResource("4_d4kp4")
-strategy_points = NodePath("../../StrategyPointGroup")
-level = NodePath("../..")
-
 [node name="Enemy4" parent="EnemyGroup1" unique_id=320022101 node_paths=PackedStringArray("strategy_points", "level") instance=ExtResource("3_nxb1t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.015411, 2.8572626, 2.332962)
-enemy_type = ExtResource("4_d4kp4")
-strategy_points = NodePath("../../StrategyPointGroup")
-level = NodePath("../..")
-
-[node name="Enemy5" parent="EnemyGroup1" unique_id=770073548 node_paths=PackedStringArray("strategy_points", "level") instance=ExtResource("3_nxb1t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9237022, 2.8572626, 6.726944)
-enemy_type = ExtResource("4_d4kp4")
-strategy_points = NodePath("../../StrategyPointGroup")
-level = NodePath("../..")
-
-[node name="Enemy6" parent="EnemyGroup1" unique_id=966939516 node_paths=PackedStringArray("strategy_points", "level") instance=ExtResource("3_nxb1t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.665432, 2.8572626, -10.209099)
-enemy_type = ExtResource("4_d4kp4")
-strategy_points = NodePath("../../StrategyPointGroup")
-level = NodePath("../..")
-
-[node name="Enemy7" parent="EnemyGroup1" unique_id=491139188 node_paths=PackedStringArray("strategy_points", "level") instance=ExtResource("3_nxb1t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.3968086, 2.8572626, -10.209099)
 enemy_type = ExtResource("4_d4kp4")
 strategy_points = NodePath("../../StrategyPointGroup")
 level = NodePath("../..")
@@ -240,7 +216,13 @@ strategy_points = NodePath("../../StrategyPointGroup")
 level = NodePath("../..")
 
 [node name="Enemy9" parent="EnemyGroup1" unique_id=1889452637 node_paths=PackedStringArray("strategy_points", "level") instance=ExtResource("3_nxb1t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.157078, 2.8572626, -2.1699448)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2437973, 2.8572626, 3.4658127)
+enemy_type = ExtResource("4_d4kp4")
+strategy_points = NodePath("../../StrategyPointGroup")
+level = NodePath("../..")
+
+[node name="Enemy10" parent="EnemyGroup1" unique_id=680560556 node_paths=PackedStringArray("strategy_points", "level") instance=ExtResource("3_nxb1t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.090172, 2.8572626, 1.2204514)
 enemy_type = ExtResource("4_d4kp4")
 strategy_points = NodePath("../../StrategyPointGroup")
 level = NodePath("../..")
@@ -248,7 +230,7 @@ level = NodePath("../..")
 [node name="EnemyGroup2" type="Node3D" parent="." unique_id=944979673]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0700684, 18.347961, 35.05542)
 
-[node name="Enemy" parent="EnemyGroup2" unique_id=680560556 node_paths=PackedStringArray("strategy_points", "level") instance=ExtResource("3_nxb1t")]
+[node name="Enemy" parent="EnemyGroup2" unique_id=1882828548 node_paths=PackedStringArray("strategy_points", "level") instance=ExtResource("3_nxb1t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2988205, -1.5176392, -1.7332306)
 enemy_type = ExtResource("7_y2c0c")
 strategy_points = NodePath("../../StrategyPointGroup2")

@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("2_jmygy")
 name = "Sniper"
-damage = 150
+damage = 90
 range = 80.0
 mag_size = 1
 reload_time = 4.0

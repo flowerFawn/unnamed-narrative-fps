@@ -5,8 +5,9 @@
 
 [resource]
 script = ExtResource("1_a8yky")
+max_hp = 30
 shot_cooldown = 0.3
 weapon_type = ExtResource("2_sd5wk")
-strategy_use = 1
-retreat_hp = 20.0
+strategy_use = 3
+retreat_hp = 10.0
 metadata/_custom_type_script = "uid://d2rqnjgk20ffv"

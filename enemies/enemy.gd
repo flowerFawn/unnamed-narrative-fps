@@ -285,6 +285,7 @@ func update_line_of_sight() -> void:
 func time_to_notice_finished() -> void:
 	if not line_of_sight_raycast.is_colliding():
 		has_line_of_sight = true
+		update_known_player_position()
 	
 ##updates the distance squared
 func update_player_distance() -> void:
@@ -434,12 +435,14 @@ func shooting_cooldown_finished() -> void:
 
 func get_hit(damage:float) -> void:
 	current_hp -= damage
-	if current_hp < enemy_type.retreat_hp:
+	if current_hp <= enemy_type.retreat_hp:
 		mode_change_trigger_hp_dropped()
-	if current_hp < 0:
+	if current_hp <= 0:
 		die()
 		
 		
 func die() -> void:
+	if goal_strategy_point != null:
+		goal_strategy_point.leave()
 	weapon.cleanup()
 	queue_free()

@@ -89,7 +89,7 @@ func set_state(new_state:PlayerState) -> void:
 
 func get_hit(damage:float) -> void:
 	current_hp -= damage
-	if current_hp < 0:
+	if current_hp <= 0:
 		die()
 		
 		
