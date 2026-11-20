@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_pmeag")
+player_location_update_rate = 0.25
 weapon_type = ExtResource("2_egdph")
 strategy_use = 3
 enemy_behaviour = 1

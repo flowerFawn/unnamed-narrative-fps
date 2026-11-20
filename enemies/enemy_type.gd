@@ -12,7 +12,11 @@ class_name EnemyType
 @export var shot_cooldown:float = 0
 ##Time after seeing the player to gain line of sight
 @export var time_to_notice:float = 0.2
-
+##How commonly (in seconds) the enemy updates the players known position.
+##This impacts where the enemy shoots, and so accuracy.
+##Lower value (more common updates) for more accurate enemies.
+##Higher value (less common updates) for less accurate enemies.
+@export var player_location_update_rate:float = 0.05
 
 
 

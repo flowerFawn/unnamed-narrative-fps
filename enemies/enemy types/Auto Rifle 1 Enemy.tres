@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_y12pc")
+player_location_update_rate = 0.25
 weapon_type = ExtResource("2_8q1ri")
 strategy_use = 3
 retreat_hp = 30.0

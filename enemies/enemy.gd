@@ -77,6 +77,8 @@ enum ModeChangeContext {
 @export var time_to_to_notice_timer:Timer
 ##Timer that is used for shot cooldowns of the enemy itself
 @export var shot_cooldown_timer:Timer
+##Timer used for updating the player's position
+@export var player_position_update_timer:Timer
 
 ##Reference to the weapon this enemy is using. Generated based on weapon type
 ##when the enemy is created
@@ -140,6 +142,7 @@ func setup() -> void:
 	time_to_to_notice_timer.wait_time = enemy_type.time_to_notice
 	if enemy_type.shot_cooldown > 0:
 		shot_cooldown_timer.wait_time = enemy_type.shot_cooldown
+	player_position_update_timer.wait_time = enemy_type.player_location_update_rate
 	
 	weapon = enemy_type.weapon_type.create_instance()
 	weapon.target_layer = 2 #targets player
@@ -202,7 +205,7 @@ func update_pathfinding() -> void:
 			if not has_line_of_sight:
 				return
 			if desired_shooting_distance_squared < distance_squared_to_player:
-				goal_point = level.player.global_position
+				goal_point = last_known_player_position
 			elif distance_squared_to_player < minimum_comfortable_distance_squared:
 				var direction_from_player_to_enemy:Vector3
 				direction_from_player_to_enemy = level.player.global_position.direction_to(global_position)
@@ -264,7 +267,6 @@ func check_for_mode_change_triggers() -> void:
 func gather_info() -> void:
 	update_line_of_sight()
 	update_player_distance()
-	update_known_player_position()
 	
 ##updates the line of sight raycast and if the enemy has line of sight.
 ##Only actually starts the time to notice timer
