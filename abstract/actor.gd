@@ -15,3 +15,7 @@ class_name Actor
 func airtime_physics_process(delta:float) -> void:
 	if velocity.y > -level.TERMINAL_VELOCITY:
 		velocity.y = max(-level.TERMINAL_VELOCITY, velocity.y - (level.GRAVITY * delta))
+
+
+func get_hit(damage:float) -> void:
+	pass

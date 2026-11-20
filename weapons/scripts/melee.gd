@@ -9,9 +9,10 @@ func _shoot() -> void:
 	get_tree().root.add_child(shapecast)
 	shapecast.global_position = global_position
 	shapecast.target_position = -global_basis.z.normalized() * weapon_info.range
+	shapecast.set_collision_mask_value(target_layer, true)
 	shapecast.force_shapecast_update()
-	var target:PhysicsBody3D = shapecast.get_collider(0)
-	if shapecast.get_collider(0) != null:
+	if shapecast.is_colliding():
+		var target:PhysicsBody3D = shapecast.get_collider(0)
 		attempt_hit(target)
 	shapecast.queue_free()
 		

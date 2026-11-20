@@ -142,6 +142,7 @@ func setup() -> void:
 		shot_cooldown_timer.wait_time = enemy_type.shot_cooldown
 	
 	weapon = enemy_type.weapon_type.create_instance()
+	weapon.target_layer = 2 #targets player
 	weapon_mesh.mesh = weapon.weapon_info.mesh
 	desired_shooting_distance_squared = weapon.weapon_info.desired_shooting_distance ** 2
 	maximum_comfortable_distance_squared = weapon.weapon_info.maximum_comfortable_shooting_distance ** 2
@@ -429,7 +430,7 @@ func shooting_cooldown_finished() -> void:
 	is_on_shot_cooldown = false
 
 
-func hit(damage:float) -> void:
+func get_hit(damage:float) -> void:
 	current_hp -= damage
 	if current_hp < enemy_type.retreat_hp:
 		mode_change_trigger_hp_dropped()

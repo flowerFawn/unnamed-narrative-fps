@@ -10,6 +10,8 @@ const SPRINT_MULTIPLIER:float = 2
 const JUMP_VERTICAL_FORCE:float = 2.5
 const JUMP_HORIZONTAL_MULTIPLIER:float = 2
 
+const MAX_HP:int = 100
+
 enum PlayerState{
 	WALKING,
 	SPRINTING,
@@ -22,6 +24,8 @@ enum PlayerState{
 @export var head:PlayerHead
 ##State of the player
 var state:PlayerState
+##current hp of the player
+var current_hp:int = MAX_HP
 
 
 func _physics_process(delta: float) -> void:
@@ -81,3 +85,14 @@ func start_jump() -> void:
 ##Sets the player's state to a new state
 func set_state(new_state:PlayerState) -> void:
 	state = new_state
+	
+
+func get_hit(damage:float) -> void:
+	current_hp -= damage
+	if current_hp < 0:
+		die()
+		
+		
+func die():
+	print("owieeee")
+	get_tree().change_scene_to_file("uid://d3xoqgmdf07lv")

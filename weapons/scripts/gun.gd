@@ -17,7 +17,7 @@ func setup() -> void:
 	super()
 
 func _shoot() -> void:
-	var ray:RayCast3D = RayCast3D.new()
+	var ray:RayCast3D = create_ray()
 	get_tree().root.add_child(ray)
 	ray.global_position = global_position
 	ray.target_position = -global_basis.z.normalized() * weapon_info.range
@@ -25,7 +25,7 @@ func _shoot() -> void:
 	if ray.is_colliding():
 		var target:PhysicsBody3D = ray.get_collider()
 		attempt_hit(target)
-		if not target.is_in_group(&"hitable"):
+		if not target.is_in_group(&"damagable"):
 			_decal_visual(ray.get_collision_point(), weapon_info.weapon_decal)
 	ray.queue_free()
 
@@ -34,7 +34,9 @@ func _shot_visuals() -> void:
 	var trail_tween:Tween = create_tween()
 	trail_instance.mesh = bullet_trail_mesh.duplicate()
 	trail_instance.mesh.material = bullet_trail_mesh.material.duplicate() #so it can be faded out
-	get_tree().root.add_child(trail_instance)
+	if not is_inside_tree():
+		return
+	get_tree().current_scene.add_child(trail_instance)
 	trail_instance.global_position = global_position
 	trail_instance.global_basis = global_basis
 	trail_instance.global_position += -global_basis.z.normalized() * weapon_info.range / 2

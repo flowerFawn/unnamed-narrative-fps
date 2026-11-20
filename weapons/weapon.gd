@@ -31,6 +31,10 @@ var on_cooldown:bool = false
 ##
 var current_ammo:int
 
+##Collision layer the weapon attempts to hit in addition to  the environment.
+##2 is player, 3 is enemy. By default targets player, enemies overwrite to 2
+var target_layer:int = 3
+
 
 func _ready() -> void:
 	if weapon_info.cooldown > 0:
@@ -113,6 +117,13 @@ func _shot_end() -> void:
 	if weapon_info.cooldown > 0:
 		on_cooldown = true
 		cooldown_timer.start()
+		
+		
+func create_ray() -> RayCast3D:
+	var ray:RayCast3D = RayCast3D.new()
+	ray.set_collision_mask_value(target_layer, true)
+	return ray
+	
 
 ##Marks the cooldown flag as false to allow new shooting. Called by cooldown
 ##timer when it finishes.
@@ -120,9 +131,9 @@ func end_cooldown() -> void:
 	on_cooldown = false
 	
 func attempt_hit(target:PhysicsBody3D) -> void:
-	if target.is_in_group(&"hitable"):
-		if target.has_method(&"hit"):
-			target.hit(weapon_info.damage)
+	if target.is_in_group(&"damagable"):
+		if target.has_method(&"get_hit"):
+			target.get_hit(weapon_info.damage)
 
 ##Creates and returns a timer with required values, and connects to given function
 func create_timer(given_wait:float, timeout_function:Callable) -> Timer:
