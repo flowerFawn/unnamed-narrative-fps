@@ -25,4 +25,8 @@ shape = SubResource("CapsuleShape3D_y8mhm")
 visible = false
 mesh = SubResource("CapsuleMesh_vmthy")
 
-[node name="HudLayer" parent="." unique_id=1006490498 instance=ExtResource("3_g1dw6")]
+[node name="HudLayer" parent="." unique_id=1006490498 node_paths=PackedStringArray("player", "weapon_handler") instance=ExtResource("3_g1dw6")]
+player = NodePath("..")
+weapon_handler = NodePath("../PlayerHead/PlayerWeaponHandler")
+
+[editable path="PlayerHead"]

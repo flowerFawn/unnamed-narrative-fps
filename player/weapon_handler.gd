@@ -20,6 +20,14 @@ var selected_weapon_index:int:
 ##Reference to the currently selected weapon
 var current_weapon:Weapon
 
+var current_weapon_ammo:int:
+	get():
+		return current_weapon.current_ammo
+
+var current_weapon_max_ammo:int:
+	get():
+		return current_weapon.weapon_info.mag_size
+
 func _ready() -> void:
 	selected_weapon_index = 0
 
