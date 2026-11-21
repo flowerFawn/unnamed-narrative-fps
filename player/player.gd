@@ -93,6 +93,12 @@ func get_hit(damage:float) -> void:
 		die()
 		
 		
+func get_healed(heal:float) -> void:
+	current_hp += heal
+	if current_hp > MAX_HP:
+		current_hp = MAX_HP
+		
+		
 func die():
 	print("owieeee")
 	get_tree().change_scene_to_file("uid://d3xoqgmdf07lv")

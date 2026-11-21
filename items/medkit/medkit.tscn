@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://ysqstu87itim"]
+
+[ext_resource type="PackedScene" uid="uid://cbsc2nav10i2j" path="res://items/medkit/medkit.glb" id="1_0x77m"]
+[ext_resource type="Script" uid="uid://7jb4sqi0ugur" path="res://items/medkit/medkit.gd" id="1_uaoio"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vmthy"]
+size = Vector3(0.5, 0.15, 0.5)
+
+[node name="Area3D" type="Area3D" unique_id=1298285707]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_uaoio")
+heal_value = 100
+
+[node name="medkit" parent="." unique_id=266680599 instance=ExtResource("1_0x77m")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2025897368]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03590771, 0)
+shape = SubResource("BoxShape3D_vmthy")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
