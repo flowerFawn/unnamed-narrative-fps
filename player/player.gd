@@ -99,6 +99,7 @@ func get_healed(heal:float) -> void:
 		current_hp = MAX_HP
 		
 		
+##Placeholder death. sends player back to main menu
 func die():
 	print("owieeee")
-	get_tree().change_scene_to_file("uid://d3xoqgmdf07lv")
+	get_tree().change_scene_to_file("uid://bem0qmxigw1nq")

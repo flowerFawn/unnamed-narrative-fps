@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://bem0qmxigw1nq"]
+
+[ext_resource type="Script" uid="uid://dkmvvuae5ps6n" path="res://ui/main menu/main_menu.gd" id="1_5p75u"]
+[ext_resource type="Script" uid="uid://dfjujojs04qkl" path="res://ui/main menu/scene_load_button.gd" id="1_fervp"]
+[ext_resource type="PackedScene" uid="uid://d3xoqgmdf07lv" path="res://demo level/demo_level.tscn" id="2_48xt1"]
+[ext_resource type="PackedScene" uid="uid://dskooj4qmp27f" path="res://prototyping/prototype world.tscn" id="3_5p75u"]
+
+[node name="Main Menu" type="Control" unique_id=803186132]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5p75u")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1331412077]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -227.5
+offset_top = -144.0
+offset_right = 227.5
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SceneLoadButton" type="Button" parent="VBoxContainer" unique_id=398565175]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Demo Level"
+script = ExtResource("1_fervp")
+scene_to_load = ExtResource("2_48xt1")
+metadata/_custom_type_script = "uid://dfjujojs04qkl"
+
+[node name="SceneLoadButton2" type="Button" parent="VBoxContainer" unique_id=1515760860]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Prototype World"
+script = ExtResource("1_fervp")
+scene_to_load = ExtResource("3_5p75u")
+metadata/_custom_type_script = "uid://dfjujojs04qkl"

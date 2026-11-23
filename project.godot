@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Unnamed Narrative FPS"
-run/main_scene="uid://dskooj4qmp27f"
+run/main_scene="uid://bem0qmxigw1nq"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
