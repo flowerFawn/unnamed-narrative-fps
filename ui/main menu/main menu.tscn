@@ -1,11 +1,30 @@
 [gd_scene format=3 uid="uid://bem0qmxigw1nq"]
 
 [ext_resource type="Script" uid="uid://dkmvvuae5ps6n" path="res://ui/main menu/main_menu.gd" id="1_5p75u"]
+[ext_resource type="PackedScene" uid="uid://dxvrbogo5sfep" path="res://ui/main menu/background.glb" id="1_cp0fa"]
 [ext_resource type="Script" uid="uid://dfjujojs04qkl" path="res://ui/main menu/scene_load_button.gd" id="1_fervp"]
 [ext_resource type="PackedScene" uid="uid://d3xoqgmdf07lv" path="res://demo level/demo_level.tscn" id="2_48xt1"]
 [ext_resource type="PackedScene" uid="uid://dskooj4qmp27f" path="res://prototyping/prototype world.tscn" id="3_5p75u"]
 
-[node name="Main Menu" type="Control" unique_id=803186132]
+[node name="Node" type="Node" unique_id=195281752]
+
+[node name="Node3D" type="Node3D" parent="." unique_id=1584455606]
+
+[node name="background" parent="Node3D" unique_id=2001185030 instance=ExtResource("1_cp0fa")]
+
+[node name="Camera3D" type="Camera3D" parent="Node3D" unique_id=1622241278]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0497437, 2.2993164, 4.5601196)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Node3D" unique_id=904060664]
+transform = Transform3D(0.9872662, -0.08672836, 0.13335541, 0.15166721, 0.26031294, -0.9535378, 0.047984686, 0.9616212, 0.27015206, 214.66827, 78.19708, 0)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Node3D" unique_id=1426904901]
+transform = Transform3D(1, 0, 0, 0, 0.5121349, 0.858905, 0, -0.858905, 0.5121349, 0, 4.364868, 4.676697)
+spot_range = 4.0978885
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1558119201]
+
+[node name="Main Menu" type="Control" parent="CanvasLayer" unique_id=803186132]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,7 +33,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5p75u")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1331412077]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Main Menu" unique_id=1331412077]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -28,7 +47,7 @@ offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SceneLoadButton" type="Button" parent="VBoxContainer" unique_id=398565175]
+[node name="SceneLoadButton" type="Button" parent="CanvasLayer/Main Menu/VBoxContainer" unique_id=398565175]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Demo Level"
@@ -36,7 +55,7 @@ script = ExtResource("1_fervp")
 scene_to_load = ExtResource("2_48xt1")
 metadata/_custom_type_script = "uid://dfjujojs04qkl"
 
-[node name="SceneLoadButton2" type="Button" parent="VBoxContainer" unique_id=1515760860]
+[node name="SceneLoadButton2" type="Button" parent="CanvasLayer/Main Menu/VBoxContainer" unique_id=1515760860]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Prototype World"
