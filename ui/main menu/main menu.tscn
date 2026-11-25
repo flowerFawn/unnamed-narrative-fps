@@ -4,7 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://dxvrbogo5sfep" path="res://ui/main menu/background.glb" id="1_cp0fa"]
 [ext_resource type="Script" uid="uid://dfjujojs04qkl" path="res://ui/main menu/scene_load_button.gd" id="1_fervp"]
 [ext_resource type="PackedScene" uid="uid://d3xoqgmdf07lv" path="res://demo level/demo_level.tscn" id="2_48xt1"]
+[ext_resource type="Script" uid="uid://b84hy1ydusn1w" path="res://misc/scripts/candle_light.gd" id="2_o23gv"]
 [ext_resource type="PackedScene" uid="uid://dskooj4qmp27f" path="res://prototyping/prototype world.tscn" id="3_5p75u"]
+[ext_resource type="Script" uid="uid://bid0sa1m2esyi" path="res://ui/main menu/menu_camera_operator.gd" id="3_g2e7b"]
 
 [node name="Node" type="Node" unique_id=195281752]
 
@@ -12,15 +14,104 @@
 
 [node name="background" parent="Node3D" unique_id=2001185030 instance=ExtResource("1_cp0fa")]
 
-[node name="Camera3D" type="Camera3D" parent="Node3D" unique_id=1622241278]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Node3D" unique_id=904060664]
+transform = Transform3D(-0.29567412, -0.2446675, 0.9234255, 0.95408297, -0.124187246, 0.27258623, 0.047984682, 0.9616212, 0.27015206, 226.27371, 39.142944, 0)
+light_color = Color(0.4392, 0.432, 0.54, 1)
+light_energy = 0.349
+light_indirect_energy = 0.566
+shadow_enabled = true
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Node3D" unique_id=670260983]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.54098177, 0.37293303, 1.2426196)
+shadow_enabled = true
+script = ExtResource("2_o23gv")
+base_energy = 0.3
+flicker_speed = 0.2
+flicker_intensity = 0.3
+flicker_time_offset = 500.0
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Node3D" unique_id=1914727520]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.84866667, 0.37293303, 0.93370616)
+shadow_enabled = true
+script = ExtResource("2_o23gv")
+base_energy = 0.3
+flicker_intensity = 0.2
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="Node3D" unique_id=1283512833]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.42610162, 0.37293303, 0.6607119)
+shadow_enabled = true
+script = ExtResource("2_o23gv")
+base_energy = 0.1
+flicker_speed = 2.0
+flicker_intensity = 0.1
+flicker_time_offset = 1000.0
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="Node3D" unique_id=1129157638]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9529434, 0.41616458, 1.834862)
+shadow_enabled = true
+script = ExtResource("2_o23gv")
+base_energy = 0.2
+flicker_speed = 0.5
+flicker_intensity = 0.2
+
+[node name="OmniLight3D5" type="OmniLight3D" parent="Node3D" unique_id=1395476503]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.032978415, 0.26704615, 2.0139678)
+shadow_enabled = true
+script = ExtResource("2_o23gv")
+base_energy = 0.2
+flicker_speed = 0.5
+flicker_intensity = 0.2
+
+[node name="OmniLight3D6" type="OmniLight3D" parent="Node3D" unique_id=1181698221]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6599207, 0.27401072, 2.7793915)
+shadow_enabled = true
+script = ExtResource("2_o23gv")
+base_energy = 0.2
+flicker_speed = 0.5
+flicker_intensity = 0.2
+
+[node name="OmniLight3D7" type="OmniLight3D" parent="Node3D" unique_id=794613676]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5064285, 2.050262, 1.1057043)
+shadow_enabled = true
+script = ExtResource("2_o23gv")
+base_energy = 1.5
+flicker_speed = 0.2
+flicker_intensity = 1.5
+flicker_time_offset = -3000.0
+
+[node name="Camera Operator" type="Node3D" parent="Node3D" unique_id=1584803031]
+script = ExtResource("3_g2e7b")
+swap_time = 15.0
+
+[node name="Camera3D" type="Camera3D" parent="Node3D/Camera Operator" unique_id=1622241278]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0497437, 2.2993164, 4.5601196)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Node3D" unique_id=904060664]
-transform = Transform3D(0.9872662, -0.08672836, 0.13335541, 0.15166721, 0.26031294, -0.9535378, 0.047984686, 0.9616212, 0.27015206, 214.66827, 78.19708, 0)
+[node name="Camera3D2" type="Camera3D" parent="Node3D/Camera Operator" unique_id=1360757564]
+transform = Transform3D(0.7258212, 0, 0.6878834, 0, 1, 0, -0.6878834, 0, 0.7258212, 4.952258, 2.2993164, 6.995117)
 
-[node name="SpotLight3D" type="SpotLight3D" parent="Node3D" unique_id=1426904901]
-transform = Transform3D(1, 0, 0, 0, 0.5121349, 0.858905, 0, -0.858905, 0.5121349, 0, 4.364868, 4.676697)
-spot_range = 4.0978885
+[node name="Camera3D3" type="Camera3D" parent="Node3D/Camera Operator" unique_id=1665850107]
+transform = Transform3D(0.73764986, 0.6252662, 0.254784, -0.02178002, -0.35512295, 0.93456584, 0.67483205, -0.69493157, -0.24833809, 0.13138247, 4.0975, 0.6601305)
+
+[node name="Camera3D4" type="Camera3D" parent="Node3D/Camera Operator" unique_id=367859861]
+transform = Transform3D(-0.993494, 0.088038646, 0.07224264, 0.044603508, 0.88446826, -0.4644636, -0.104787074, -0.45821947, -0.8826407, 0.13138247, 0.03073597, -0.35266376)
+
+[node name="Camera3D5" type="Camera3D" parent="Node3D/Camera Operator" unique_id=2001273511]
+transform = Transform3D(-0.18087666, 0.1333962, -0.9744173, -0.09381296, 0.98390144, 0.15210858, 0.9790213, 0.11892593, -0.16545054, -2.7936378, 1.9564577, 0.787858)
+
+[node name="Camera3D6" type="Camera3D" parent="Node3D/Camera Operator" unique_id=883812779]
+transform = Transform3D(-0.72790337, 0.13339622, 0.6725788, 0.17870343, 0.98390156, -0.0017395616, -0.66198325, 0.11892593, -0.74002355, 0.880087, 2.070538, -0.13043946)
+
+[node name="Camera3D7" type="Camera3D" parent="Node3D/Camera Operator" unique_id=1303501401]
+transform = Transform3D(-0.8235294, -0.008579869, 0.5672087, 0.13738844, 0.967101, 0.21410273, -0.55038524, 0.25424793, -0.79525745, 3.0298598, 2.4256542, -3.6421256)
+
+[node name="Camera3D8" type="Camera3D" parent="Node3D/Camera Operator" unique_id=1164718730]
+transform = Transform3D(0.7469158, 0.24554038, -0.6179213, -0.066567875, 0.95226336, 0.29793167, 0.6615782, -0.18139628, 0.7276059, -1.5656264, 2.1851578, 3.3766549)
+
+[node name="Camera3D9" type="Camera3D" parent="Node3D/Camera Operator" unique_id=2024167790]
+transform = Transform3D(0.3516239, 0.23407502, -0.906405, -0.030394841, 0.97057927, 0.23885639, 0.9356479, -0.056437623, 0.34839377, -0.90058404, 1.6896821, 1.5019923)
+
+[node name="Camera3D10" type="Camera3D" parent="Node3D/Camera Operator" unique_id=1284786689]
+transform = Transform3D(-0.96023756, 0.23407502, -0.15216202, 0.23988597, 0.97057945, -0.020761855, 0.14282513, -0.05643761, -0.9881377, 0.37361547, 12.273979, -2.6938863)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1558119201]
 
@@ -35,16 +126,12 @@ script = ExtResource("1_5p75u")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Main Menu" unique_id=1331412077]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = 4
 anchor_top = 0.5
-anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -227.5
-offset_top = -144.0
-offset_right = 227.5
-offset_bottom = 72.0
-grow_horizontal = 2
+offset_top = -108.0
+offset_right = 455.0
+offset_bottom = 108.0
 grow_vertical = 2
 
 [node name="SceneLoadButton" type="Button" parent="CanvasLayer/Main Menu/VBoxContainer" unique_id=398565175]
