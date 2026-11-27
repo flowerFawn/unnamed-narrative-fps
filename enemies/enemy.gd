@@ -122,6 +122,8 @@ var maximum_comfortable_distance_squared:float
 ##to save cycles. This is stored in a variable so it doesn't have to be recalculated
 ##each time. Assigned when the new weapon instance is created
 var minimum_comfortable_distance_squared:float
+##Actual range of weapon squared. Use to check when in range
+var weapon_range_distance_squared:float
 
 
 
@@ -151,6 +153,7 @@ func setup() -> void:
 	desired_shooting_distance_squared = weapon.weapon_info.desired_shooting_distance ** 2
 	maximum_comfortable_distance_squared = weapon.weapon_info.maximum_comfortable_shooting_distance ** 2
 	minimum_comfortable_distance_squared = weapon.weapon_info.minimum_comfortable_shooting_distance ** 2
+	weapon_range_distance_squared = weapon.weapon_info.range ** 2
 	head.add_child(weapon)
 	weapon.reload_started.connect(mode_change_trigger_reload_started)
 	weapon.reload_finished.connect(mode_change_trigger_reload_finished)
@@ -173,7 +176,7 @@ func _physics_process(delta: float) -> void:
 	check_for_state_change()
 	head.look_towards(last_known_player_position)
 	if is_shooting:
-		do_shooting()
+		consider_shooting()
 	match state:
 		EnemyState.WALKING:
 			moving_physics_process(delta)
@@ -322,7 +325,7 @@ func set_mode(new_mode:EnemyMode, context:ModeChangeContext = ModeChangeContext.
 			goal_point = last_known_player_position
 		EnemyMode.STRATEGIC_POSITIONING:
 			is_pathfinding = true
-			is_shooting = false
+			is_shooting = true
 			match context:
 				ModeChangeContext.NA, ModeChangeContext.START:
 					goal_strategy_point = strategy_points.get_closest_point(global_position)
@@ -441,9 +444,16 @@ func mode_change_trigger_reload_finished() -> void:
 
 #endregion
 
+
+func consider_shooting() -> void:
+	if distance_squared_to_player <= weapon_range_distance_squared:
+		attempt_shooting()
+
+
+
 ##If out of ammo, reload.
 ##Otherwise shoot if possible, and start enemy's own shot timer
-func do_shooting() -> void:
+func attempt_shooting() -> void:
 	if weapon.current_ammo == 0:
 		weapon.attempt_reload()
 	if has_line_of_sight and not is_on_shot_cooldown:
