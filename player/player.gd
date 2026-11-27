@@ -5,10 +5,10 @@ class_name Player
 ##Depending on the state runs a different process, and then calls move_and_slide().
 ##Contains a PlayerHead that controls the camera and shooting.
 
-const BASE_SPEED:int = 3
-const SPRINT_MULTIPLIER:float = 2
+const BASE_SPEED:int = 4
+const SPRINT_MULTIPLIER:float = 1.5
 const JUMP_VERTICAL_FORCE:float = 2.5
-const JUMP_HORIZONTAL_MULTIPLIER:float = 2
+const JUMP_HORIZONTAL_MULTIPLIER:float = 1.2
 
 const MAX_HP:int = 100
 
