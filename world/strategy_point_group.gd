@@ -75,7 +75,12 @@ func get_closest_point_parameters(from:Vector3,
 			lowest_distance_squared = current_distance_squared
 			closest_point = point
 	if not valid_point_found:
-		return get_closest_point(from) #if one cannot be found, try to find one outside the parameters
+		if wanted_line_of_sight != LineOfSightMode.DISREGARDED:
+			return get_closest_point_parameters(from, wanted_type, LineOfSightMode.DISREGARDED, true)
+		elif wanted_type != StrategyPoint.StrategyType.ANY:
+			return get_closest_point_parameters(from, StrategyPoint.StrategyType.ANY, LineOfSightMode.DISREGARDED, true)
+		else:
+			return get_closest_point(from) #if one cannot be found, try to find one outside the parameters
 	else:
 		return closest_point
 		

@@ -5,6 +5,9 @@ class_name Weapon
 ##runtime. To use this weapon, outside actors should call attempt_shot.
 
 
+signal reload_started()
+signal reload_finished()
+
 ##Type of automatic shooting
 ##Manual:Currently same as semi
 ##Semi:Shoots once each time the trigger is pulled/mouse clicked
@@ -96,10 +99,12 @@ func attempt_reload() -> void:
 		
 func _start_reload() -> void:
 	current_ammo = 0
+	reload_started.emit()
 	reload_timer.start()
 
 func _reload_finished() -> void:
 	current_ammo = weapon_info.mag_size
+	reload_finished.emit()
 
 ##Creates a decal from the given packed scene at the given point in global space
 ##may be overwritten in some subclasses for more complex decals

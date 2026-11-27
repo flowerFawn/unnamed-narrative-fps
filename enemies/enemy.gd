@@ -42,10 +42,11 @@ enum StrategyBehaviour {
 
 enum ModeChangeContext {
 	NA,
-	START, #search for any strategy point
-	REPOSITION, #search for nearby shooting point in line of sight
-	RETREAT, #search for a strategy point out of line of sight
-	FLEE, #search for cover out of line of sight
+	START, ##search for any strategy point
+	REPOSITION, ##search for nearby shooting point in line of sight
+	RELOAD, ##search for cover out of line of sight, may be different to flee later
+	RETREAT, ##search for a strategy point out of line of sight
+	FLEE, ##search for cover out of line of sight
 }
 
 ##Enemy type of this enemy
@@ -151,6 +152,8 @@ func setup() -> void:
 	maximum_comfortable_distance_squared = weapon.weapon_info.maximum_comfortable_shooting_distance ** 2
 	minimum_comfortable_distance_squared = weapon.weapon_info.minimum_comfortable_shooting_distance ** 2
 	head.add_child(weapon)
+	weapon.reload_started.connect(mode_change_trigger_reload_started)
+	weapon.reload_finished.connect(mode_change_trigger_reload_finished)
 	match enemy_type.strategy_use:
 		StrategyUse.NONE, StrategyUse.FALLBACK:
 			set_mode(EnemyMode.SIMPLE_POSITIONING)
@@ -329,18 +332,19 @@ func set_mode(new_mode:EnemyMode, context:ModeChangeContext = ModeChangeContext.
 				ModeChangeContext.RETREAT:
 					goal_strategy_point = strategy_points.get_closest_point_parameters(
 						global_position, StrategyPoint.StrategyType.ANY, StrategyPointGroup.LineOfSightMode.REQUIRED_NOT)
-				ModeChangeContext.FLEE:
+				ModeChangeContext.FLEE, ModeChangeContext.RELOAD:
 					goal_strategy_point = strategy_points.get_closest_point_parameters(
 						global_position, StrategyPoint.StrategyType.COVER, StrategyPointGroup.LineOfSightMode.REQUIRED_NOT)
 			goal_strategy_point.occupy()
 		EnemyMode.STRATEGIC_SHOOTING:
 			is_pathfinding = false
 			is_shooting = true
+	update_pathfinding()
 			
 			
 			
 func mode_change_trigger_player_moves_too_close() -> void:
-	#print("player too close mode change")
+	print("player too close mode change")
 	match enemy_type.strategy_use:
 		StrategyUse.NONE, StrategyUse.START:
 			set_mode(EnemyMode.SIMPLE_POSITIONING)
@@ -349,7 +353,7 @@ func mode_change_trigger_player_moves_too_close() -> void:
 			
 			
 func mode_change_trigger_player_leaves_range() -> void:
-	#print("player too far mode change")
+	print("player too far mode change")
 	match  enemy_type.strategy_use:
 		StrategyUse.NONE, StrategyUse.START, StrategyUse.FALLBACK:
 			match mode:
@@ -368,7 +372,7 @@ func mode_change_trigger_player_leaves_range() -> void:
 			
 			
 func mode_change_trigger_desired_distance() -> void:
-	#print("player desired distance mode change")
+	print("player desired distance mode change")
 	match enemy_type.strategy_use:
 		StrategyUse.NONE, StrategyUse.START, StrategyUse.BOTH:
 			set_mode(EnemyMode.SIMPLE_SHOOTING)
@@ -377,9 +381,6 @@ func mode_change_trigger_desired_distance() -> void:
 			
 			
 func mode_change_trigger_lost_player() -> void:
-	#print("player lost mode change")
-	if not last_known_player_position.is_finite(): #only trigger when already seen player
-		return
 	match enemy_type.strategy_use:
 		StrategyUse.NONE, StrategyUse.START:
 			match mode:
@@ -392,7 +393,7 @@ func mode_change_trigger_lost_player() -> void:
 		
 		
 func mode_change_trigger_found_player() -> void:
-	#print("player found mode change")
+	print("player found mode change")
 	match enemy_type.strategy_use:
 		StrategyUse.NONE, StrategyUse.START, StrategyUse.BOTH:
 			set_mode(EnemyMode.SIMPLE_POSITIONING)
@@ -401,7 +402,7 @@ func mode_change_trigger_found_player() -> void:
 		
 
 func mode_change_trigger_target_reached() -> void:
-	#print("reached target mode change")
+	print("reached target mode change")
 	match enemy_type.strategy_use:
 		StrategyUse.START, StrategyUse.FALLBACK, StrategyUse.BOTH, StrategyUse.FULL:
 			if mode == EnemyMode.STRATEGIC_POSITIONING:
@@ -409,12 +410,34 @@ func mode_change_trigger_target_reached() -> void:
 				
 				
 func mode_change_trigger_hp_dropped() -> void:
-	#print("hp drop mode change")
+	print("hp drop mode change")
 	match enemy_type.strategy_use:
 		StrategyUse.FALLBACK, StrategyUse.BOTH, StrategyUse.FULL:
 			set_mode(EnemyMode.STRATEGIC_POSITIONING, ModeChangeContext.FLEE)
 		_:
 			return
+			
+			
+func mode_change_trigger_reload_started() -> void:
+	print("reload started mode change")
+	match enemy_type.strategy_use:
+		StrategyUse.NONE, StrategyUse.START:
+			set_mode(EnemyMode.SIMPLE_POSITIONING)
+		StrategyUse.FALLBACK, StrategyUse.BOTH:
+			set_mode(EnemyMode.STRATEGIC_POSITIONING, ModeChangeContext.RELOAD)
+		StrategyUse.FULL:
+			pass
+	
+	
+func mode_change_trigger_reload_finished() -> void:
+	print("reload finished mode change")
+	match enemy_type.strategy_use:
+		StrategyUse.NONE, StrategyUse.START:
+			set_mode(EnemyMode.SIMPLE_SHOOTING)
+		StrategyUse.FALLBACK, StrategyUse.BOTH:
+			set_mode(EnemyMode.STRATEGIC_POSITIONING, ModeChangeContext.REPOSITION)
+		StrategyUse.FULL:
+			pass
 
 #endregion
 
