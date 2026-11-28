@@ -1,6 +1,9 @@
 extends Actor
 class_name Enemy
 
+const MAX_ACT_DISTANCE:int = 100
+
+
 var speed:float
 var current_hp:float
 
@@ -171,6 +174,8 @@ func _process(delta: float) -> void:
 #region BEHAVIOUR
 
 func _physics_process(delta: float) -> void:
+	if distance_squared_to_player > MAX_ACT_DISTANCE ** 2:
+		return
 	gather_info()
 	check_for_mode_change_triggers()
 	check_for_state_change()
