@@ -38,6 +38,8 @@ var state:PlayerState
 var current_hp:int = MAX_HP
 
 
+
+
 func _physics_process(delta: float) -> void:
 	#checks if state needs to change at the start of this frame
 	check_for_state_change()
@@ -143,5 +145,16 @@ func get_healed(heal:float) -> void:
 		
 ##Placeholder death. sends player back to main menu
 func die():
+	collision_layer = 0
+	var TIME_TILL_MENU:float = 5
 	print("owieeee")
+	var corpse_body:RigidBody3D = load("uid://bivhl4dlaemag").instantiate()
+	remove_child(head)
+	corpse_body.add_child(head)
+	head.position = Vector3.ZERO
+	get_tree().current_scene.add_child(corpse_body)
+	corpse_body.global_position = global_position
+	corpse_body.apply_impulse(Vector3(randf(), randf(), randf()) * 100)
+	corpse_body.apply_impulse(velocity * 50)
+	await get_tree().create_timer(TIME_TILL_MENU).timeout
 	get_tree().change_scene_to_file("uid://bem0qmxigw1nq")

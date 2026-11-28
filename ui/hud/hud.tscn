@@ -3,10 +3,11 @@
 [ext_resource type="Script" uid="uid://cjq6tmfaw3m6c" path="res://ui/hud/hud.gd" id="1_4d6w6"]
 [ext_resource type="Texture2D" uid="uid://4q335xxs2p" path="res://icon.svg" id="1_xmswo"]
 
-[node name="HudLayer" type="CanvasLayer" unique_id=1006490498 node_paths=PackedStringArray("hp_label", "ammo_label")]
+[node name="HudLayer" type="CanvasLayer" unique_id=1006490498 node_paths=PackedStringArray("hp_label", "ammo_label", "death_tint")]
 script = ExtResource("1_4d6w6")
 hp_label = NodePath("Hud/HBoxContainer/PanelContainer/HPLabel")
 ammo_label = NodePath("Hud/HBoxContainer2/PanelContainer/AmmoLabel")
+death_tint = NodePath("Hud/DeathTint")
 
 [node name="Hud" type="Control" parent="." unique_id=1163480573]
 layout_mode = 3
@@ -76,3 +77,13 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 64
 text = "n/n"
 horizontal_alignment = 1
+
+[node name="DeathTint" type="ColorRect" parent="Hud" unique_id=552324765]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.57, 0.1026, 0.1026, 0.627451)

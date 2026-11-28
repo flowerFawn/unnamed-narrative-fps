@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bivhl4dlaemag"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0dv8d"]
+rough = true
+bounce = 0.1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_vmthy"]
+radius = 0.31627387
+
+[node name="PlayerCorpseRigidBody" type="RigidBody3D" unique_id=863065826]
+collision_layer = 5
+mass = 80.0
+physics_material_override = SubResource("PhysicsMaterial_0dv8d")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1271231994]
+shape = SubResource("SphereShape3D_vmthy")
