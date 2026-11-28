@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EnemyType" format=3 uid="uid://bvh0l5vhw0f4o"]
+
+[ext_resource type="Script" uid="uid://d2rqnjgk20ffv" path="res://enemies/enemy_type.gd" id="1_v45va"]
+[ext_resource type="Resource" uid="uid://d1a18glwpd3sp" path="res://weapons/resources/Auto Rifle.tres" id="2_grm0a"]
+
+[resource]
+script = ExtResource("1_v45va")
+max_hp = 50
+speed = 1.6
+time_to_notice = 1.0
+player_location_update_rate = 0.1
+weapon_type = ExtResource("2_grm0a")
+strategy_use = 3
+retreat_hp = 10.0
+sight_distance = 35.0
+metadata/_custom_type_script = "uid://d2rqnjgk20ffv"

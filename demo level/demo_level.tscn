@@ -12,7 +12,7 @@
 [ext_resource type="Resource" uid="uid://bnbs1elca1i8s" path="res://enemies/enemy types/cultists/Sniper Cultist.tres" id="8_myhgk"]
 [ext_resource type="PackedScene" uid="uid://db3y50260c1kv" path="res://demo level/objects/tent.glb" id="9_d570x"]
 [ext_resource type="Resource" uid="uid://ciftrhhtl13wu" path="res://enemies/enemy types/organisation/Pistol Soldier.tres" id="9_lda27"]
-[ext_resource type="Resource" uid="uid://ddhwr3wr2u3h1" path="res://enemies/enemy types/organisation/Rifle Soldier.tres" id="10_w4gws"]
+[ext_resource type="Resource" uid="uid://bvh0l5vhw0f4o" path="res://enemies/enemy types/organisation/Rifle Cover-fire Soldier.tres" id="10_lda27"]
 [ext_resource type="PackedScene" uid="uid://c4skvin55c0d4" path="res://demo level/objects/tree.glb" id="11_wb1tu"]
 [ext_resource type="PackedScene" uid="uid://cgt2x7yc3nuw7" path="res://demo level/objects/watchtower.glb" id="12_a5u3l"]
 [ext_resource type="PackedScene" uid="uid://cf6lp112nnlgs" path="res://demo level/objects/military barrier.glb" id="14_xmiig"]
@@ -178,7 +178,13 @@ type = 2
 metadata/_custom_type_script = "uid://cybksx0q1t5jg"
 
 [node name="StrategyPoint5" type="Marker3D" parent="StrategyPointGroup3" unique_id=1937951991]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2849197, -4.03125, -15.11779)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8617973, -4.03125, -12.588402)
+script = ExtResource("3_kahmw")
+type = 2
+metadata/_custom_type_script = "uid://cybksx0q1t5jg"
+
+[node name="StrategyPoint12" type="Marker3D" parent="StrategyPointGroup3" unique_id=1907095191]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4861679, -4.03125, -15.583725)
 script = ExtResource("3_kahmw")
 type = 2
 metadata/_custom_type_script = "uid://cybksx0q1t5jg"
@@ -214,7 +220,7 @@ type = 1
 metadata/_custom_type_script = "uid://cybksx0q1t5jg"
 
 [node name="Player" parent="." unique_id=202432036 instance=ExtResource("5_d570x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 148.28516, 1.5735426, 68.690735)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.84671, 3.1719313, 27.980133)
 
 [node name="EnemyGroup1" type="Node3D" parent="." unique_id=238687854]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 85.78954, -1.6020508, 49.407124)
@@ -261,15 +267,9 @@ enemy_type = ExtResource("9_lda27")
 strategy_points = NodePath("../../StrategyPointGroup3")
 level = NodePath("../..")
 
-[node name="Enemy2" parent="EnemyGroup3" unique_id=1960230101 node_paths=PackedStringArray("strategy_points", "level") instance=ExtResource("3_nxb1t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.304367, -2.0164733, 3.5620823)
-enemy_type = ExtResource("9_lda27")
-strategy_points = NodePath("../../StrategyPointGroup3")
-level = NodePath("../..")
-
 [node name="Enemy3" parent="EnemyGroup3" unique_id=745625946 node_paths=PackedStringArray("strategy_points", "level") instance=ExtResource("3_nxb1t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.530308, -1.7194893, 1.8163185)
-enemy_type = ExtResource("10_w4gws")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.3569908, -1.7194893, -5.949909)
+enemy_type = ExtResource("10_lda27")
 strategy_points = NodePath("../../StrategyPointGroup3")
 level = NodePath("../..")
 
