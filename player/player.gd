@@ -7,14 +7,18 @@ class_name Player
 
 const BASE_SPEED:int = 4
 const SPRINT_MULTIPLIER:float = 1.5
+const CROUCH_MULTIPLIER:float = 0.5
 const JUMP_VERTICAL_FORCE:float = 2.5
 const JUMP_HORIZONTAL_MULTIPLIER:float = 1.2
+
+const PLAYER_HEAD_STANDING_POSITION:Vector3 = Vector3(0, 0.75, 0)
 
 const MAX_HP:int = 100
 
 enum PlayerState{
 	WALKING,
 	SPRINTING,
+	CROUCHING,
 	AIRTIME,
 	DISABLED,
 }
@@ -22,6 +26,12 @@ enum PlayerState{
 
 ##Head node of the player. Controls the camera and the players pitch/yaw.
 @export var head:PlayerHead
+##Collision used when the player is standing
+@export var standing_collision:CollisionShape3D
+##Collision used when the player is crouching
+@export var crouching_collision:CollisionShape3D
+
+
 ##State of the player
 var state:PlayerState
 ##current hp of the player
@@ -37,6 +47,8 @@ func _physics_process(delta: float) -> void:
 			walking_physics_process(delta)
 		PlayerState.SPRINTING:
 			walking_physics_process(delta, SPRINT_MULTIPLIER)
+		PlayerState.CROUCHING:
+			walking_physics_process(delta, CROUCH_MULTIPLIER)
 		PlayerState.AIRTIME:
 			airtime_physics_process(delta)
 		PlayerState.DISABLED:
@@ -71,8 +83,14 @@ func check_for_state_change() -> void:
 	if state == PlayerState.WALKING:
 		if Input.is_action_pressed("Sprint"):
 			set_state(PlayerState.SPRINTING)
-	if state == PlayerState.SPRINTING:
+		elif Input.is_action_just_pressed("Crouch"):
+			print("yes")
+			set_state(PlayerState.CROUCHING)
+	elif state == PlayerState.SPRINTING:
 		if not Input.is_action_pressed("Sprint"):
+			set_state(PlayerState.WALKING)
+	elif state == PlayerState.CROUCHING:
+		if not Input.is_action_pressed("Crouch"):
 			set_state(PlayerState.WALKING)
 		
 ##Sets the player's state to airtime 
@@ -81,10 +99,34 @@ func start_jump() -> void:
 	velocity.y = JUMP_VERTICAL_FORCE
 	velocity.x *= JUMP_HORIZONTAL_MULTIPLIER
 	velocity.z *= JUMP_HORIZONTAL_MULTIPLIER
+	
+	
+func start_crouch() -> void:
+	print("starting crouch")
+	standing_collision.disabled = true
+	crouching_collision.disabled = false
+	head.position = Vector3.ZERO
+	state = PlayerState.CROUCHING
+	
+	
+func leave_crouch() -> void:
+	standing_collision.disabled = false
+	crouching_collision.disabled = true
+	head.position = PLAYER_HEAD_STANDING_POSITION
+	state = PlayerState.WALKING
+	
 				
 ##Sets the player's state to a new state
 func set_state(new_state:PlayerState) -> void:
+	if state == new_state:
+		return
+	match state: #checks previous state
+		PlayerState.CROUCHING:
+			leave_crouch()
 	state = new_state
+	match new_state:
+		PlayerState.CROUCHING:
+			start_crouch()
 	
 
 func get_hit(damage:float) -> void:
