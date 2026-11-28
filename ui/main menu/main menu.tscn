@@ -27,15 +27,18 @@ layout_mode = 1
 anchors_preset = -1
 anchor_bottom = 1.0
 offset_top = 55.0
-offset_right = 365.0
+offset_right = 378.0
 offset_bottom = -115.0
 grow_vertical = 2
 
 [node name="Label" type="Label" parent="CanvasLayer/Main Menu/VBoxContainer" unique_id=426830201]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 2
 theme_override_font_sizes/font_size = 64
 text = "Placeholder"
+horizontal_alignment = 1
 
 [node name="SceneLoadButton" type="Button" parent="CanvasLayer/Main Menu/VBoxContainer" unique_id=398565175]
 layout_mode = 2

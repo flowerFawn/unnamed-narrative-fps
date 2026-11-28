@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EnemyType" format=3 uid="uid://d1tdsnj3d4f7w"]
+
+[ext_resource type="Script" uid="uid://d2rqnjgk20ffv" path="res://enemies/enemy_type.gd" id="1_310lg"]
+[ext_resource type="Resource" uid="uid://4jr44hepu3pe" path="res://weapons/resources/Pistol.tres" id="2_n16fg"]
+
+[resource]
+script = ExtResource("1_310lg")
+max_hp = 25
+shot_cooldown = 0.5
+time_to_notice = 0.3
+player_location_update_rate = 0.15
+weapon_type = ExtResource("2_n16fg")
+enemy_behaviour = 1
+metadata/_custom_type_script = "uid://d2rqnjgk20ffv"

@@ -8,7 +8,7 @@ class_name Player
 const BASE_SPEED:int = 4
 const SPRINT_MULTIPLIER:float = 1.5
 const CROUCH_MULTIPLIER:float = 0.5
-const JUMP_VERTICAL_FORCE:float = 2.5
+const JUMP_VERTICAL_FORCE:float = 3
 const JUMP_HORIZONTAL_MULTIPLIER:float = 1.2
 
 const PLAYER_HEAD_STANDING_POSITION:Vector3 = Vector3(0, 0.75, 0)

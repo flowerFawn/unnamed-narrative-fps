@@ -1,7 +1,7 @@
 extends Actor
 class_name Enemy
 
-var speed:float = 1.5
+var speed:float
 var current_hp:float
 
 
@@ -277,7 +277,10 @@ func gather_info() -> void:
 ##updates the line of sight raycast and if the enemy has line of sight.
 ##Only actually starts the time to notice timer
 func update_line_of_sight() -> void:
-	line_of_sight_raycast.target_position = level.player.global_position - global_position
+	#stopgap solution to ensure the enemies can't see a player crouching out of sight
+	#TODO: make a more permanent solution to this
+	var player_crouching:bool = level.player.state == Player.PlayerState.CROUCHING
+	line_of_sight_raycast.target_position = level.player.global_position - global_position + ((Vector3.DOWN * 0.5 * float(player_crouching)))
 	if distance_squared_to_player < enemy_type.sight_distance ** 2:
 		if line_of_sight_raycast.is_colliding():
 			time_to_to_notice_timer.stop()
@@ -300,7 +303,7 @@ func update_player_distance() -> void:
 ##updates the known position of the player only if the enemy has line of sight
 func update_known_player_position() -> void:
 	if has_line_of_sight:
-		last_known_player_position = level.player.global_position
+		last_known_player_position = level.player.head.global_position
 			
 ##sets the state
 func set_state(new_state:EnemyState) -> void:
